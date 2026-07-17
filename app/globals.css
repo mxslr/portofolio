@@ -99,6 +99,11 @@ body {
   }
 }
 
+/* pages that hug their content instead of filling a full sheet */
+.word-page-fit {
+  min-height: 0 !important;
+}
+
 /* Typography inside the document */
 .word-page a {
   color: var(--accent);

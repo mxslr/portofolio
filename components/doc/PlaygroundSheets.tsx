@@ -5,7 +5,7 @@ import TypingTest from "./TypingTest";
 const p = portfolio;
 
 function Sheet({ children }: { children: React.ReactNode }) {
-  return <section className="word-page doc-body">{children}</section>;
+  return <section className="word-page word-page-fit doc-body">{children}</section>;
 }
 
 export default function PlaygroundSheets() {
