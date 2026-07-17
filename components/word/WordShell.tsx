@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -14,6 +15,7 @@ import gsap from "gsap";
 import {
   AlignLeft,
   Bold,
+  Check,
   ChevronDown,
   Eraser,
   Eye,
@@ -126,6 +128,117 @@ function useClickOutside(onAway: () => void) {
   return ref;
 }
 
+/* --------------------------------------------------- word-style dropdown */
+
+function RibbonSelect({
+  ariaLabel,
+  value,
+  options,
+  onPick,
+  className = "",
+  buttonStyle,
+}: {
+  ariaLabel: string;
+  value: string;
+  options: { v: string; label: string; css?: string }[];
+  onPick: (v: string) => void;
+  className?: string;
+  buttonStyle?: React.CSSProperties;
+}) {
+  const [open, setOpen] = useState(false);
+  const [rect, setRect] = useState<{ x: number; y: number; w: number } | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const away = (e: MouseEvent | TouchEvent) => {
+      const t = e.target as Node;
+      if (!ref.current?.contains(t) && !listRef.current?.contains(t)) setOpen(false);
+    };
+    const esc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const close = () => setOpen(false);
+    document.addEventListener("mousedown", away);
+    document.addEventListener("touchstart", away);
+    document.addEventListener("keydown", esc);
+    window.addEventListener("resize", close);
+    return () => {
+      document.removeEventListener("mousedown", away);
+      document.removeEventListener("touchstart", away);
+      document.removeEventListener("keydown", esc);
+      window.removeEventListener("resize", close);
+    };
+  }, [open]);
+
+  const toggle = () => {
+    if (!open) {
+      const r = ref.current?.getBoundingClientRect();
+      if (r) setRect({ x: r.left, y: r.bottom, w: r.width });
+    }
+    setOpen((v) => !v);
+  };
+
+  const current = options.find((o) => o.v === value);
+
+  return (
+    <div ref={ref} className={`relative shrink-0 ${className}`}>
+      <button
+        type="button"
+        aria-label={ariaLabel}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className={`flex h-8 w-full items-center justify-between gap-1.5 rounded border px-2 text-[13px] text-ink hover:bg-hover ${
+          open ? "border-accent" : "border-line"
+        }`}
+        style={buttonStyle}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={toggle}
+      >
+        <span className="truncate">{current?.label ?? value}</span>
+        <ChevronDown
+          size={12}
+          className={`shrink-0 text-dim transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      {open &&
+        rect &&
+        createPortal(
+          <div
+            ref={listRef}
+            role="listbox"
+            aria-label={ariaLabel}
+            className="fixed z-[80] max-h-72 overflow-y-auto border border-line bg-surface py-1"
+            style={{ left: rect.x, top: rect.y + 4, minWidth: rect.w }}
+          >
+            {options.map((o) => (
+              <button
+                key={o.v}
+                type="button"
+                role="option"
+                aria-selected={o.v === value}
+                className={`flex w-full items-center justify-between gap-3 px-3 py-1.5 text-left text-[13px] hover:bg-hover ${
+                  o.v === value ? "font-semibold text-accent" : "text-ink"
+                }`}
+                style={o.css ? { fontFamily: o.css } : undefined}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  onPick(o.v);
+                  setOpen(false);
+                }}
+              >
+                {o.label}
+                {o.v === value && <Check size={13} className="shrink-0" />}
+              </button>
+            ))}
+          </div>,
+          document.body
+        )}
+    </div>
+  );
+}
+
 /* ------------------------------------------------------------ component */
 
 export default function WordShell({ docId, meta, nav, children }: Props) {
@@ -134,6 +247,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   const [mounted, setMounted] = useState(false);
 
   const [fontId, setFontId] = useState<string>("segoe");
+  const [sizeV, setSizeV] = useState("3");
   const [editing, setEditing] = useState(false);
   const [banner, setBanner] = useState<"protected" | "editing" | null>(
     "protected"
@@ -156,7 +270,6 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   const shellRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const savedRange = useRef<Range | null>(null);
 
   const font = FONTS.find((f) => f.id === fontId) ?? FONTS[0];
   const dark = mounted && resolvedTheme === "dark";
@@ -178,21 +291,6 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
 
   /* ------------------------------------------------ formatting commands */
 
-  const saveSelection = useCallback(() => {
-    const sel = window.getSelection();
-    if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
-      savedRange.current = sel.getRangeAt(0).cloneRange();
-    }
-  }, []);
-
-  const restoreSelection = useCallback(() => {
-    const r = savedRange.current;
-    if (!r) return;
-    const sel = window.getSelection();
-    sel?.removeAllRanges();
-    sel?.addRange(r);
-  }, []);
-
   const exec = useCallback(
     (cmd: string, value?: string) => {
       if (!editing) {
@@ -201,12 +299,10 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
       }
       // wait a tick so contentEditable is active before the command runs
       requestAnimationFrame(() => {
-        restoreSelection();
         document.execCommand(cmd, false, value);
-        savedRange.current = null;
       });
     },
-    [editing, restoreSelection]
+    [editing]
   );
 
   const stepFontSize = useCallback(
@@ -663,32 +759,24 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
         <div className="no-scrollbar flex items-center gap-1 overflow-x-auto border-t border-line px-2 py-1.5">
           {tab === "home" && (
             <>
-              <select
-                aria-label="Font"
-                className="h-8 w-40 shrink-0 rounded border border-line bg-surface px-2 text-[13px] text-ink"
+              <RibbonSelect
+                ariaLabel="Font"
                 value={fontId}
-                onChange={(e) => setFontId(e.target.value)}
-                style={{ fontFamily: font.css }}
-              >
-                {FONTS.map((f) => (
-                  <option key={f.id} value={f.id} style={{ fontFamily: f.css }}>
-                    {f.label}
-                  </option>
-                ))}
-              </select>
-              <select
-                aria-label="Font size for selected text"
-                className="h-8 w-16 shrink-0 rounded border border-line bg-surface px-1.5 text-[13px] text-ink"
-                defaultValue="3"
-                onMouseDown={saveSelection}
-                onChange={(e) => exec("fontSize", e.target.value)}
-              >
-                {SIZES.map((s) => (
-                  <option key={s.v} value={s.v}>
-                    {s.label}
-                  </option>
-                ))}
-              </select>
+                options={FONTS.map((f) => ({ v: f.id, label: f.label, css: f.css }))}
+                onPick={setFontId}
+                className="w-44"
+                buttonStyle={{ fontFamily: font.css }}
+              />
+              <RibbonSelect
+                ariaLabel="Font size for selected text"
+                value={sizeV}
+                options={SIZES.map((s) => ({ v: s.v, label: s.label }))}
+                onPick={(v) => {
+                  setSizeV(v);
+                  exec("fontSize", v);
+                }}
+                className="w-16"
+              />
               <button
                 className={rIconBtn}
                 title="Grow font"

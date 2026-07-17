@@ -12,14 +12,6 @@ export const metadata: Metadata = {
     description: portfolio.meta.siteDescription,
     type: "website",
   },
-  icons: {
-    icon: [
-      { url: "/icon.png" },
-      { url: "/icon.png", sizes: "32x32" },
-      { url: "/icon.png", sizes: "192x192" },
-    ],
-    apple: { url: "/icon.png", sizes: "180x180" },
-  },
 };
 
 export default function RootLayout({
