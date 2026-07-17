@@ -5,8 +5,10 @@ import { useTheme } from "next-themes";
 import {
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   Image as ImageIcon,
   MessageSquare,
+  Music,
   Pause,
   Play,
   Video,
@@ -140,18 +142,24 @@ export function Logo({
 
 export function BrandStrip({ items }: { items: { name: string; logo: string }[] }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
-      {items.map((b) => (
-        <span key={b.name} className="flex items-center gap-2.5" title={b.name}>
-          <Logo
+    <div className="flex flex-wrap items-center gap-x-12 gap-y-7">
+      {items.map((b) =>
+        b.logo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={b.name}
             src={b.logo}
-            name={b.name}
-            size={30}
-            className="grayscale transition duration-300 hover:grayscale-0"
+            alt={`${b.name} logo`}
+            title={b.name}
+            loading="lazy"
+            className="h-12 w-auto max-w-48 object-contain grayscale transition duration-300 hover:grayscale-0"
           />
-          <span className="text-[13px] font-medium text-pagedim">{b.name}</span>
-        </span>
-      ))}
+        ) : (
+          <span key={b.name} className="text-[14px] font-semibold text-pagedim" title={b.name}>
+            {b.name}
+          </span>
+        )
+      )}
     </div>
   );
 }
@@ -285,13 +293,15 @@ export function ProjectMedia({
   name,
   images,
   videos,
+  link = "",
 }: {
   name: string;
   images: string[];
   videos: string[];
+  link?: string;
 }) {
   const [viewer, setViewer] = useState<"photos" | "videos" | null>(null);
-  if (images.length === 0 && videos.length === 0) return null;
+  if (images.length === 0 && videos.length === 0 && !link) return null;
 
   const btn =
     "inline-flex items-center gap-2 border border-pageline px-3 py-1.5 text-[12.5px] font-medium text-pagetext hover:border-accent hover:text-accent";
@@ -302,6 +312,18 @@ export function ProjectMedia({
       contentEditable={false}
       suppressContentEditableWarning
     >
+      {link && (
+        <a
+          className={`${btn} no-underline`}
+          style={{ color: "inherit", textDecoration: "none" }}
+          href={link}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <ExternalLink size={14} strokeWidth={1.7} />
+          Visit project
+        </a>
+      )}
       {images.length > 0 && (
         <button className={btn} onClick={() => setViewer("photos")}>
           <ImageIcon size={14} strokeWidth={1.7} />
@@ -409,6 +431,24 @@ export function MusicPlayer({
       <div className="flex flex-col divide-y divide-pageline border border-pageline">
         {tracks.map((t, i) => (
           <div key={`${t.title}-${i}`} className="flex items-center gap-3 px-3 py-2.5">
+            {t.cover ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={t.cover}
+                alt={`${t.title} album cover`}
+                width={44}
+                height={44}
+                loading="lazy"
+                className="h-11 w-11 shrink-0 border border-pageline object-cover"
+              />
+            ) : (
+              <span
+                className="flex h-11 w-11 shrink-0 items-center justify-center border border-pageline text-pagedim"
+                aria-hidden
+              >
+                <Music size={16} strokeWidth={1.6} />
+              </span>
+            )}
             <button
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-pageline text-pagetext hover:border-accent hover:text-accent"
               aria-label={playing && current === i ? `Pause ${t.title}` : `Play ${t.title}`}

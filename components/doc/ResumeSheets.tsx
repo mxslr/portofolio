@@ -95,7 +95,7 @@ function ProjectEntry({ pr }: { pr: Project }) {
           </span>
         ))}
       </p>
-      <ProjectMedia name={pr.name} images={pr.images} videos={pr.videos} />
+      <ProjectMedia name={pr.name} images={pr.images} videos={pr.videos} link={pr.link} />
     </article>
   );
 }

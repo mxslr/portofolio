@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 const NAV = [
   { id: "gallery", label: "Photo Gallery" },
   { id: "music", label: "Now Playing" },
+  { id: "typing", label: "Typing Race" },
   { id: "faq", label: "FAQ" },
 ];
 

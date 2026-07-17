@@ -69,6 +69,7 @@ export interface Track {
   title: string;
   artist: string;
   src: string;
+  cover: string;
 }
 
 export interface Faq {
@@ -115,6 +116,7 @@ export interface Portfolio {
   playground: {
     gallery: { intro: string; photos: GalleryPhoto[] };
     music: { intro: string; tracks: Track[]; spotifyEmbed: string };
+    typing: { intro: string; sentences: string[] };
     faq: Faq[];
   };
 }

@@ -27,7 +27,8 @@ Everything on the site lives in one file: **`data/portfolio.json`**. Add, edit, 
 | `certifications` | Certificates, optional `image` (certificate photo) and `url` (verify link) |
 | `brands` | The logo strip. `logo` can be any image URL or a local `/logos/...` path |
 | `playground.gallery` | Personal photo gallery. Put files in `public/gallery/` and list them here |
-| `playground.music` | Tracks. Put mp3 files in `public/music/` and point `src` at them. `spotifyEmbed` accepts a Spotify embed URL |
+| `playground.music` | Tracks. Put mp3 files in `public/music/` and point `src` at them. Each track can have a `cover` image (album art). `spotifyEmbed` accepts a Spotify embed URL |
+| `playground.typing` | Typing Race sentences and intro. Scores are stored in Supabase (`portfolio_typing_scores`) on a shared leaderboard |
 | `playground.faq` | The FAQ page |
 
 Notes:
