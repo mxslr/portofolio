@@ -69,7 +69,7 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
     setStartAt(0);
     setLiveWpm(0);
     setPhase("running");
-    requestAnimationFrame(() => inputRef.current?.focus());
+    requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
   };
 
   const finish = useCallback(
@@ -170,8 +170,8 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
           </div>
 
           <label
-            className="block cursor-text border border-pageline p-4 font-[inherit] text-[16px] leading-relaxed"
-            onClick={() => inputRef.current?.focus()}
+            className="relative block cursor-text border border-pageline p-4 font-[inherit] text-[16px] leading-relaxed"
+            onClick={() => inputRef.current?.focus({ preventScroll: true })}
           >
             {target.split("").map((ch, i) => {
               const typedCh = typed[i];
@@ -196,7 +196,7 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
             })}
             <input
               ref={inputRef}
-              className="sr-only"
+              className="absolute inset-0 h-full w-full cursor-text opacity-0"
               value={typed}
               onChange={(e) => onType(e.target.value)}
               onPaste={(e) => e.preventDefault()}
