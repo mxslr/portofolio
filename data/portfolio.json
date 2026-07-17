@@ -389,8 +389,20 @@
       "intro": "A few frames from outside the terminal.",
       "photos": [
         {
-          "src": "/foto-profil.jpg",
-          "caption": "That's me"
+          "src": "/gallery/gallery1.jpeg",
+          "caption": "@ Apple Developer Institute"
+        },
+        {
+          "src": "/gallery/gallery2.jpeg",
+          "caption": "W Gf"
+        },
+        {
+          "src": "/gallery/gallery3.jpeg",
+          "caption": "@ DWP 2024"
+        },
+        {
+          "src": "/gallery/gallery4.jpeg",
+          "caption": "@ Mountain"
         }
       ]
     },
@@ -398,10 +410,10 @@
       "intro": "What plays while the models train.",
       "tracks": [
         {
-          "title": "Add your song",
-          "artist": "Drop an mp3 in public/music and edit data/portfolio.json",
-          "src": "/music/track-1.mp3",
-          "cover": ""
+          "title": "Future - Life Is Good ft. Drake",
+          "artist": "Future, Drake",
+          "src": "/music/song1.mp3",
+          "cover": "/logos/albumcover.jpg"
         }
       ],
       "spotifyEmbed": ""
