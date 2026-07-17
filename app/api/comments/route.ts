@@ -1,4 +1,6 @@
+import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { checkComment, checkName } from "@/lib/moderation";
 
 const TABLE = "portfolio_comments";
 
@@ -15,7 +17,18 @@ function configured() {
   return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY);
 }
 
-// naive per-instance rate limit: 1 post per 20s per IP
+function clientIp(req: NextRequest) {
+  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
+}
+
+function ipHash(ip: string) {
+  return createHash("sha256")
+    .update(`${ip}:${process.env.SUPABASE_ANON_KEY ?? "salt"}`)
+    .digest("hex")
+    .slice(0, 32);
+}
+
+// fast in-process limit; the database trigger is the real enforcement
 const lastPost = new Map<string, number>();
 
 // one retry on transient network failures to Supabase
@@ -47,8 +60,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
+  const ip = clientIp(req);
   const now = Date.now();
   if (now - (lastPost.get(ip) ?? 0) < 20_000) {
     return NextResponse.json(
@@ -64,22 +76,35 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const author = typeof payload.author === "string" ? payload.author.trim() : "";
+  const author =
+    typeof payload.author === "string"
+      ? payload.author.trim().replace(/\s+/g, " ")
+      : "";
   const body = typeof payload.body === "string" ? payload.body.trim() : "";
-  if (!author || !body || author.length > 60 || body.length > 500) {
-    return NextResponse.json(
-      { error: "Name (max 60) and comment (max 500) are required." },
-      { status: 400 }
-    );
+
+  const nameVerdict = checkName(author);
+  if (!nameVerdict.ok) {
+    return NextResponse.json({ error: nameVerdict.reason }, { status: 400 });
+  }
+  const bodyVerdict = checkComment(body);
+  if (!bodyVerdict.ok) {
+    return NextResponse.json({ error: bodyVerdict.reason }, { status: 400 });
   }
 
   const res = await fetchRetry(`${process.env.SUPABASE_URL}/rest/v1/${TABLE}`, {
     method: "POST",
     headers: { ...supabaseHeaders(), Prefer: "return=minimal" },
-    body: JSON.stringify({ author, body }),
+    body: JSON.stringify({ author, body, ip_hash: ipHash(ip) }),
   });
 
   if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    if (text.includes("rate_limited")) {
+      return NextResponse.json(
+        { error: "You have hit the comment limit for now. Come back later." },
+        { status: 429 }
+      );
+    }
     return NextResponse.json(
       { error: "Could not post the comment." },
       { status: 502 }

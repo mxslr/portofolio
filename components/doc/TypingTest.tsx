@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard, RotateCcw, Trophy } from "lucide-react";
+import { checkName } from "@/lib/moderation";
 
 interface Row {
   name: string;
@@ -47,8 +48,10 @@ export default function TypingTest({
   const [board, setBoard] = useState<Board>({ top: [], me: null });
   const [boardError, setBoardError] = useState(false);
   const [submitNote, setSubmitNote] = useState("");
+  const [nameError, setNameError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const clientIdRef = useRef("");
+  const roundTokenRef = useRef("");
   // synchronous mirrors of typing state: onChange can fire faster than React
   // commits state, so guards must not read from the render closure
   const typedRef = useRef("");
@@ -93,6 +96,12 @@ export default function TypingTest({
   const start = () => {
     if (!name.trim()) return;
     if (!locked) {
+      const verdict = checkName(name);
+      if (!verdict.ok) {
+        setNameError(verdict.reason ?? "That name will not work.");
+        return;
+      }
+      setNameError("");
       localStorage.setItem("typing-player-name", name.trim());
       setLocked(true);
     }
@@ -102,7 +111,15 @@ export default function TypingTest({
     for (let i = 0; i < rounds; i++) {
       picked.push(...pool.splice(Math.floor(Math.random() * pool.length), 1));
     }
-    setTarget(picked.join(" "));
+    const targetText = picked.join(" ");
+    setTarget(targetText);
+    roundTokenRef.current = "";
+    fetch(`/api/typing?round=${targetText.length}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d?.token) roundTokenRef.current = d.token;
+      })
+      .catch(() => {});
     typedRef.current = "";
     mistakesRef.current = 0;
     startRef.current = 0;
@@ -135,6 +152,7 @@ export default function TypingTest({
             name: name.trim(),
             wpm,
             accuracy,
+            token: roundTokenRef.current,
           }),
         });
         const data = await res.json().catch(() => null);
@@ -214,6 +232,11 @@ export default function TypingTest({
               ? "Your name is locked to this browser and your best score counts."
               : "Pick wisely. This name sticks to this browser."}
           </p>
+          {nameError && (
+            <p className="mt-1 text-[12.5px] text-[#a4262c] dark:text-[#ff9c8f]">
+              {nameError}
+            </p>
+          )}
         </div>
       )}
 
