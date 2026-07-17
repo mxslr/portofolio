@@ -116,7 +116,7 @@ export interface Portfolio {
   playground: {
     gallery: { intro: string; photos: GalleryPhoto[] };
     music: { intro: string; tracks: Track[]; spotifyEmbed: string };
-    typing: { intro: string; sentences: string[] };
+    typing: { intro: string; sentencesPerRound: number; sentences: string[] };
     faq: Faq[];
   };
 }

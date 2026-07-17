@@ -3,27 +3,52 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard, RotateCcw, Trophy } from "lucide-react";
 
-interface Score {
+interface Row {
   name: string;
   wpm: number;
   accuracy: number;
   created_at: string;
 }
 
+interface Board {
+  top: Row[];
+  me: (Row & { rank: number }) | null;
+}
+
 type Phase = "idle" | "running" | "done";
 
-export default function TypingTest({ sentences }: { sentences: string[] }) {
+function getClientId() {
+  let id = localStorage.getItem("typing-client-id");
+  if (!id) {
+    id =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+    localStorage.setItem("typing-client-id", id);
+  }
+  return id;
+}
+
+export default function TypingTest({
+  sentences,
+  perRound,
+}: {
+  sentences: string[];
+  perRound: number;
+}) {
   const [name, setName] = useState("");
+  const [locked, setLocked] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
-  const [target, setTarget] = useState(sentences[0] ?? "");
+  const [target, setTarget] = useState("");
   const [typed, setTyped] = useState("");
   const [startAt, setStartAt] = useState(0);
   const [liveWpm, setLiveWpm] = useState(0);
   const [result, setResult] = useState<{ wpm: number; accuracy: number } | null>(null);
-  const [board, setBoard] = useState<Score[]>([]);
+  const [board, setBoard] = useState<Board>({ top: [], me: null });
   const [boardError, setBoardError] = useState(false);
   const [submitNote, setSubmitNote] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const clientIdRef = useRef("");
   // synchronous mirrors of typing state: onChange can fire faster than React
   // commits state, so guards must not read from the render closure
   const typedRef = useRef("");
@@ -32,7 +57,9 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
 
   const loadBoard = useCallback(async () => {
     try {
-      const res = await fetch("/api/typing");
+      const res = await fetch(
+        `/api/typing?client=${encodeURIComponent(clientIdRef.current)}`
+      );
       if (!res.ok) throw new Error();
       setBoard(await res.json());
       setBoardError(false);
@@ -42,8 +69,15 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
   }, []);
 
   useEffect(() => {
+    clientIdRef.current = getClientId();
+    const savedName = localStorage.getItem("typing-player-name") ?? "";
+    if (savedName) {
+      setName(savedName);
+      setLocked(true);
+    } else {
+      setName(localStorage.getItem("word-comment-name") ?? "");
+    }
     loadBoard();
-    setName(localStorage.getItem("word-comment-name") ?? "");
   }, [loadBoard]);
 
   /* live WPM ticker */
@@ -58,8 +92,17 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
 
   const start = () => {
     if (!name.trim()) return;
-    localStorage.setItem("word-comment-name", name.trim());
-    setTarget(sentences[Math.floor(Math.random() * sentences.length)]);
+    if (!locked) {
+      localStorage.setItem("typing-player-name", name.trim());
+      setLocked(true);
+    }
+    const pool = [...sentences];
+    const picked: string[] = [];
+    const rounds = Math.max(1, Math.min(perRound, pool.length));
+    for (let i = 0; i < rounds; i++) {
+      picked.push(...pool.splice(Math.floor(Math.random() * pool.length), 1));
+    }
+    setTarget(picked.join(" "));
     typedRef.current = "";
     mistakesRef.current = 0;
     startRef.current = 0;
@@ -87,13 +130,20 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
         const res = await fetch("/api/typing", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: name.trim(), wpm, accuracy }),
+          body: JSON.stringify({
+            clientId: clientIdRef.current,
+            name: name.trim(),
+            wpm,
+            accuracy,
+          }),
         });
-        if (!res.ok) {
-          const data = await res.json().catch(() => null);
-          throw new Error(data?.error ?? "Could not save the score.");
-        }
-        setSubmitNote("Saved to the leaderboard.");
+        const data = await res.json().catch(() => null);
+        if (!res.ok) throw new Error(data?.error ?? "Could not save the score.");
+        setSubmitNote(
+          data.improved
+            ? `New personal best. You are rank ${data.rank}.`
+            : `Your best stays at ${data.best} WPM, rank ${data.rank}.`
+        );
         loadBoard();
       } catch (err) {
         setSubmitNote(
@@ -127,6 +177,10 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
     }
   };
 
+  const meInTop = board.me
+    ? board.top.findIndex((r) => r.created_at === board.me?.created_at)
+    : -1;
+
   const chip =
     "inline-flex items-center gap-2 border border-pageline px-4 py-2 text-[13.5px] font-medium text-pagetext hover:border-accent hover:text-accent disabled:opacity-40";
 
@@ -134,19 +188,32 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
     <div contentEditable={false} suppressContentEditableWarning>
       {/* ------------------------------------------------ setup / play area */}
       {phase === "idle" && (
-        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-          <input
-            className="w-full border border-pageline bg-transparent px-3 py-2 text-[13.5px] text-pagetext outline-none placeholder:text-pagedim focus:border-accent sm:w-56"
-            placeholder="Enter your name..."
-            maxLength={30}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && start()}
-          />
-          <button className={chip} disabled={!name.trim()} onClick={start}>
-            <Keyboard size={14} strokeWidth={1.8} />
-            Start typing test
-          </button>
+        <div>
+          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+            {locked ? (
+              <span className="border border-pageline px-3 py-2 text-[13.5px] text-pagetext">
+                Playing as <strong>{name}</strong>
+              </span>
+            ) : (
+              <input
+                className="w-full border border-pageline bg-transparent px-3 py-2 text-[13.5px] text-pagetext outline-none placeholder:text-pagedim focus:border-accent sm:w-56"
+                placeholder="Enter your name..."
+                maxLength={30}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && start()}
+              />
+            )}
+            <button className={chip} disabled={!name.trim()} onClick={start}>
+              <Keyboard size={14} strokeWidth={1.8} />
+              Start typing test
+            </button>
+          </div>
+          <p className="mt-2 text-[12px] text-pagedim">
+            {locked
+              ? "Your name is locked to this browser and your best score counts."
+              : "Pick wisely. This name sticks to this browser."}
+          </p>
         </div>
       )}
 
@@ -204,7 +271,7 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck={false}
-              aria-label="Type the sentence shown above"
+              aria-label="Type the sentences shown above"
             />
           </label>
 
@@ -229,7 +296,7 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
         <p className="text-[13px] text-pagedim">
           The leaderboard is taking a nap. Try again in a bit.
         </p>
-      ) : board.length === 0 ? (
+      ) : board.top.length === 0 ? (
         <p className="text-[13px] text-pagedim">
           No scores yet. The throne is empty and it is judging you.
         </p>
@@ -245,16 +312,39 @@ export default function TypingTest({ sentences }: { sentences: string[] }) {
               </tr>
             </thead>
             <tbody>
-              {board.map((s, i) => (
-                <tr key={`${s.name}-${s.created_at}`} className="border-b border-pageline">
+              {board.top.map((s, i) => (
+                <tr
+                  key={`${i}-${s.name}-${s.wpm}`}
+                  className={`border-b border-pageline ${
+                    i === meInTop ? "font-semibold text-accent" : ""
+                  }`}
+                >
                   <td className="py-1.5 pr-3 text-pagedim">{i + 1}</td>
-                  <td className="max-w-[180px] truncate py-1.5 pr-3 font-medium">
+                  <td className="max-w-45 truncate py-1.5 pr-3 font-medium">
                     {s.name}
+                    {i === meInTop ? " (you)" : ""}
                   </td>
                   <td className="py-1.5 pr-3 text-right font-semibold">{s.wpm}</td>
                   <td className="py-1.5 pr-3 text-right text-pagedim">{s.accuracy}%</td>
                 </tr>
               ))}
+              {board.me && meInTop === -1 && (
+                <>
+                  <tr>
+                    <td colSpan={4} className="py-1 text-center text-pagedim">
+                      ...
+                    </td>
+                  </tr>
+                  <tr className="border-b border-pageline font-semibold text-accent">
+                    <td className="py-1.5 pr-3">{board.me.rank}</td>
+                    <td className="max-w-45 truncate py-1.5 pr-3">
+                      {board.me.name} (you)
+                    </td>
+                    <td className="py-1.5 pr-3 text-right">{board.me.wpm}</td>
+                    <td className="py-1.5 pr-3 text-right">{board.me.accuracy}%</td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>

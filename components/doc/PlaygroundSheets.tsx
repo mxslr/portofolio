@@ -39,7 +39,10 @@ export default function PlaygroundSheets() {
           Typing Race
         </h2>
         <p className="mb-5 text-pagedim">{p.playground.typing.intro}</p>
-        <TypingTest sentences={p.playground.typing.sentences} />
+        <TypingTest
+          sentences={p.playground.typing.sentences}
+          perRound={p.playground.typing.sentencesPerRound}
+        />
       </Sheet>
 
       <Sheet>

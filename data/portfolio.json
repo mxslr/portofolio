@@ -434,16 +434,19 @@
       }
     ],
     "typing": {
-      "intro": "Type the sentence as fast and as accurately as you can. Scores go straight to the public leaderboard, so no pressure.",
+      "intro": "Each round is three IT sentences. Type them fast and clean, then claim your spot on the public leaderboard. One name per browser, best score counts.",
+      "sentencesPerRound": 3,
       "sentences": [
-        "I train machine learning models and then build the platforms that bring them to life.",
-        "Leakage free evaluation beats a suspiciously perfect accuracy score every single time.",
-        "Ship fast, measure honestly, and never trust a model you cannot explain.",
-        "The quick brown fox jumps over the lazy dog while training a neural network.",
-        "Good engineers write code that works, great engineers write code that others understand.",
-        "Data leakage is the art of accidentally cheating on your own exam.",
-        "Marshall builds full stack platforms powered by carefully evaluated models.",
-        "Ketik kalimat ini secepat mungkin tanpa typo, kalau bisa sambil senyum."
+        "There are only two hard things in computer science, cache invalidation and naming things.",
+        "It works on my machine is the start of every great debugging story.",
+        "Machine learning is just spicy statistics running on very expensive hardware.",
+        "A deployed model in production beats a perfect model in a notebook.",
+        "The best code review comment is a test case that proves the bug.",
+        "Never push to production on a Friday afternoon unless you enjoy weekend debugging.",
+        "Clean code always looks like it was written by someone who cares.",
+        "The database is always fine until the day you forget to back it up.",
+        "Every senior engineer was once a junior who refused to give up.",
+        "A good API is like a good joke, if you have to explain it, it is not that good."
       ]
     }
   }

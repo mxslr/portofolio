@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const TABLE = "portfolio_typing_scores";
+const CLIENT_ID_RE = /^[A-Za-z0-9-]{8,64}$/;
 
 function supabaseHeaders() {
   const key = process.env.SUPABASE_ANON_KEY ?? "";
@@ -27,16 +28,62 @@ async function fetchRetry(url: string, init: RequestInit) {
   }
 }
 
-export async function GET() {
-  if (!configured()) return NextResponse.json([]);
+interface Row {
+  name: string;
+  wpm: number;
+  accuracy: number;
+  created_at: string;
+}
+
+const base = () => `${process.env.SUPABASE_URL}/rest/v1/${TABLE}`;
+
+async function countWhere(filter: string): Promise<number> {
+  const res = await fetchRetry(`${base()}?select=id&${filter}&limit=1`, {
+    headers: { ...supabaseHeaders(), Prefer: "count=exact" },
+  });
+  const range = res.headers.get("content-range") ?? "";
+  const total = Number(range.split("/")[1]);
+  return Number.isFinite(total) ? total : 0;
+}
+
+async function rankOf(row: Row): Promise<number> {
+  const better = await countWhere(`wpm=gt.${row.wpm}`);
+  const tiesEarlier = await countWhere(
+    `wpm=eq.${row.wpm}&created_at=lt.${encodeURIComponent(row.created_at)}`
+  );
+  return better + tiesEarlier + 1;
+}
+
+async function myRow(clientId: string): Promise<Row | null> {
   const res = await fetchRetry(
-    `${process.env.SUPABASE_URL}/rest/v1/${TABLE}?select=name,wpm,accuracy,created_at&order=wpm.desc,created_at.asc&limit=15`,
+    `${base()}?select=name,wpm,accuracy,created_at&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,
+    { headers: supabaseHeaders() }
+  );
+  if (!res.ok) return null;
+  const rows: Row[] = await res.json();
+  return rows[0] ?? null;
+}
+
+export async function GET(req: NextRequest) {
+  if (!configured()) return NextResponse.json({ top: [], me: null });
+
+  const res = await fetchRetry(
+    `${base()}?select=name,wpm,accuracy,created_at&order=wpm.desc,created_at.asc&limit=10`,
     { headers: supabaseHeaders(), next: { revalidate: 0 } }
   );
   if (!res.ok) {
     return NextResponse.json({ error: "Could not load the leaderboard." }, { status: 502 });
   }
-  return NextResponse.json(await res.json());
+  const top: Row[] = await res.json();
+
+  const clientId = req.nextUrl.searchParams.get("client") ?? "";
+  let me: (Row & { rank: number }) | null = null;
+  if (CLIENT_ID_RE.test(clientId)) {
+    const row = await myRow(clientId);
+    if (row) me = { ...row, rank: await rankOf(row) };
+  }
+
+  return NextResponse.json({ top, me });
 }
 
 export async function POST(req: NextRequest) {
@@ -56,19 +103,26 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let payload: { name?: unknown; wpm?: unknown; accuracy?: unknown };
+  let payload: {
+    clientId?: unknown;
+    name?: unknown;
+    wpm?: unknown;
+    accuracy?: unknown;
+  };
   try {
     payload = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
+  const clientId = typeof payload.clientId === "string" ? payload.clientId : "";
   const name = typeof payload.name === "string" ? payload.name.trim() : "";
   const wpm = typeof payload.wpm === "number" ? Math.round(payload.wpm * 10) / 10 : NaN;
   const accuracy =
     typeof payload.accuracy === "number" ? Math.round(payload.accuracy * 10) / 10 : NaN;
 
   if (
+    !CLIENT_ID_RE.test(clientId) ||
     !name ||
     name.length > 30 ||
     !Number.isFinite(wpm) ||
@@ -81,16 +135,46 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "That score does not look right." }, { status: 400 });
   }
 
-  const res = await fetchRetry(`${process.env.SUPABASE_URL}/rest/v1/${TABLE}`, {
-    method: "POST",
-    headers: { ...supabaseHeaders(), Prefer: "return=minimal" },
-    body: JSON.stringify({ name, wpm, accuracy }),
-  });
+  const existing = await myRow(clientId);
+  let improved = false;
 
-  if (!res.ok) {
-    return NextResponse.json({ error: "Could not save the score." }, { status: 502 });
+  if (!existing) {
+    const res = await fetchRetry(base(), {
+      method: "POST",
+      headers: { ...supabaseHeaders(), Prefer: "return=minimal" },
+      body: JSON.stringify({ client_id: clientId, name, wpm, accuracy }),
+    });
+    if (!res.ok) {
+      return NextResponse.json({ error: "Could not save the score." }, { status: 502 });
+    }
+    improved = true;
+  } else if (wpm > existing.wpm) {
+    const res = await fetchRetry(
+      `${base()}?client_id=eq.${encodeURIComponent(clientId)}`,
+      {
+        method: "PATCH",
+        headers: { ...supabaseHeaders(), Prefer: "return=minimal" },
+        body: JSON.stringify({ wpm, accuracy }),
+      }
+    );
+    if (!res.ok) {
+      return NextResponse.json({ error: "Could not save the score." }, { status: 502 });
+    }
+    improved = true;
   }
 
   lastPost.set(ip, now);
-  return NextResponse.json({ ok: true }, { status: 201 });
+
+  const row = (await myRow(clientId)) ?? {
+    name,
+    wpm,
+    accuracy,
+    created_at: new Date().toISOString(),
+  };
+  const rank = await rankOf(row);
+
+  return NextResponse.json(
+    { ok: true, improved, best: row.wpm, rank },
+    { status: 201 }
+  );
 }
