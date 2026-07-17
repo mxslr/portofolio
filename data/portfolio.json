@@ -26,7 +26,7 @@
       "school": "Telkom University",
       "degree": "Bachelor of Information Systems",
       "period": "August 2023 - Present",
-      "gpa": "3.69 / 4.00",
+      "gpa": "3.70 / 4.00",
       "notes": "Active member of the GDGoC Machine Learning Study Group, 12+ weekly sessions on Python, TensorFlow, and computer vision."
     },
     "skills": [
@@ -200,12 +200,7 @@
         "Built the entire web application independently, end to end.",
         "Delivered as a social impact initiative educating 40+ residents in a rural village about AI-generated media fraud."
       ],
-      "images": [
-        "/projects/amanin-1.png",
-        "/projects/amanin-2.png",
-        "/projects/amanin-3.png",
-        "/projects/amanin-4.png"
-      ],
+      "images": [],
       "videos": []
     },
     {
