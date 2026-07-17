@@ -1,126 +1,200 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-}
-
+/*
+  Design tokens for the Word chrome.
+  Light mode mirrors Word's default theme, dark mode mirrors Word's black theme.
+*/
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --chrome-bg: #f5f5f5;          /* title bar and app frame */
+  --chrome-surface: #ffffff;     /* ribbon surface */
+  --chrome-hover: #e8e8e8;
+  --chrome-active: #dcdcdc;
+  --chrome-border: #e0e0e0;
+  --chrome-text: #333333;
+  --chrome-dim: #6b6b6b;
+  --accent: #185abd;             /* Word blue */
+  --accent-soft: #eaf1fb;
+  --canvas: #ededed;             /* gray area behind the pages */
+  --page-bg: #ffffff;
+  --page-text: #262626;
+  --page-dim: #595959;
+  --page-border: #dadada;
+  --page-rule: #262626;          /* section heading underline, like the CV */
+  --comment-bg: #fbf8f2;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --chrome-bg: #1f1f1f;
+  --chrome-surface: #292929;
+  --chrome-hover: #3a3a3a;
+  --chrome-active: #454545;
+  --chrome-border: #454545;
+  --chrome-text: #e8e8e8;
+  --chrome-dim: #9d9d9d;
+  --accent: #6cb2f5;
+  --accent-soft: #1e3a5c;
+  --canvas: #161616;
+  --page-bg: #2d2d2d;
+  --page-text: #e4e4e4;
+  --page-dim: #a8a8a8;
+  --page-border: #454545;
+  --page-rule: #e4e4e4;
+  --comment-bg: #33302a;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+@theme inline {
+  --color-chrome: var(--chrome-bg);
+  --color-surface: var(--chrome-surface);
+  --color-hover: var(--chrome-hover);
+  --color-active: var(--chrome-active);
+  --color-line: var(--chrome-border);
+  --color-ink: var(--chrome-text);
+  --color-dim: var(--chrome-dim);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-canvas: var(--canvas);
+  --color-page: var(--page-bg);
+  --color-pagetext: var(--page-text);
+  --color-pagedim: var(--page-dim);
+  --color-pageline: var(--page-border);
+  --color-commentbg: var(--comment-bg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--chrome-text);
+  font-family: var(--doc-font, "Segoe UI"), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+/* Word-like text selection color */
+::selection {
+  background: #b3d4fc;
+  color: #111111;
+}
+
+/* The document sheet */
+.word-page {
+  background: var(--page-bg);
+  color: var(--page-text);
+  border: 1px solid var(--page-border);
+  width: 100%;
+  max-width: 816px;
+  min-height: 400px;
+  margin: 0 auto;
+  padding: clamp(28px, 7vw, 88px) clamp(20px, 8vw, 96px);
+  font-family: var(--doc-font, "Segoe UI"), system-ui, sans-serif;
+}
+
+@media (min-width: 880px) {
+  .word-page {
+    min-height: 1056px; /* letter page ratio at 96dpi */
+  }
+}
+
+/* Typography inside the document */
+.word-page a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.doc-h1 {
+  font-size: clamp(26px, 5vw, 36px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+.doc-h2 {
+  font-size: clamp(17px, 2.6vw, 21px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1.5px solid var(--page-rule);
+  padding-bottom: 4px;
+  margin-bottom: 18px;
+  scroll-margin-top: 140px;
+}
+
+.doc-body {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .doc-body {
+    font-size: 14px;
+  }
+}
+
+/* contenteditable focus should not show an outline, like Word */
+[contenteditable] {
+  outline: none;
+  caret-color: var(--accent);
+}
+
+/* font tags produced by execCommand inherit the doc look */
+.word-page font {
+  line-height: 1.5;
+}
+
+/* Ruler ticks */
+.ruler-ticks {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--chrome-dim) 0 1px,
+    transparent 1px 12px
+  );
+  background-size: 96px 100%;
+}
+
+/* Hide scrollbars on the ribbon scroller but keep it scrollable */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Zoom on the page stack */
+.page-zoom {
+  zoom: var(--page-zoom, 1);
+}
+
+/* Motion setup: elements start visible, GSAP animates from */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print: only the document, no chrome */
+@media print {
+  .word-chrome,
+  .word-panel {
+    display: none !important;
   }
   body {
-    @apply bg-background text-foreground;
+    background: white;
+  }
+  .word-page {
+    border: none;
+    max-width: 100%;
+    min-height: 0;
+    padding: 0 0 48px;
   }
 }

@@ -1,0 +1,440 @@
+{
+  "meta": {
+    "name": "Marshall Rasendria Mahendra",
+    "shortName": "Marshall",
+    "initials": "MR",
+    "headline": "AI/ML Engineer and Full-Stack Developer",
+    "location": "Yogyakarta, Indonesia",
+    "email": "marshallrasendria2103@gmail.com",
+    "phone": "+62-812-818-813",
+    "website": "https://mxslr.my.id",
+    "documentName": "Marshall_Rasendria_Mahendra.docx",
+    "cvPdf": "/CV_Marshall Rasendria Mahendra.pdf",
+    "cvDocx": "/CV_Marshall_Rasendria_Mahendra.docx",
+    "profilePhoto": "/foto-profil.jpg",
+    "siteTitle": "Marshall Rasendria Mahendra | Portfolio",
+    "siteDescription": "AI/ML Engineer and Full-Stack Developer. Portfolio of Marshall Rasendria Mahendra, styled as a living Word document."
+  },
+  "about": {
+    "greeting": "Hi, I'm Marshall.",
+    "paragraphs": [
+      "I train machine learning models and then build the full-stack platforms that put them in front of real people. Currently an Information Systems undergraduate at Telkom University, currently interning as an AI Engineer, and permanently curious.",
+      "In the past 6 months I shipped 6+ end-to-end products, reached the finalist stage in 3 national hackathons, and collected 5 professional certifications from Google, IBM, Microsoft, and HackerRank. I like my evaluation leakage-free, my APIs documented, and my coffee unsupervised.",
+      "This whole site is one big document. Go ahead, switch to Editing mode and mess with it. It resets when you refresh, just like my sleep schedule."
+    ],
+    "education": {
+      "school": "Telkom University",
+      "degree": "Bachelor of Information Systems",
+      "period": "August 2023 - Present",
+      "gpa": "3.69 / 4.00",
+      "notes": "Active member of the GDGoC Machine Learning Study Group, 12+ weekly sessions on Python, TensorFlow, and computer vision."
+    },
+    "skills": [
+      {
+        "label": "AI and Machine Learning",
+        "items": "Python, TensorFlow, TensorFlow.js, PyTorch, Scikit-Learn, OpenCV, MediaPipe, YOLO, CNNs, transfer learning, Grad-CAM, leakage-free evaluation"
+      },
+      {
+        "label": "LLM Applications",
+        "items": "OpenAI API, LangChain, RAG, prompt engineering"
+      },
+      {
+        "label": "Full-Stack Web",
+        "items": "React, Next.js, TypeScript, Node.js, NestJS, Express.js, FastAPI, PHP, Laravel, PostgreSQL, Prisma, Supabase, Docker"
+      },
+      {
+        "label": "3D and Graphics",
+        "items": "Three.js, react-three-fiber, on-device inference, real-time computer vision"
+      },
+      {
+        "label": "Data and Analytics",
+        "items": "Pandas, NumPy, SQL, Matplotlib, Jupyter, Kaggle, BigQuery, Google Cloud Platform"
+      },
+      {
+        "label": "Enterprise Systems",
+        "items": "Odoo, SAP"
+      }
+    ]
+  },
+  "socials": [
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/mxslr/",
+      "icon": "linkedin"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/mxslr",
+      "icon": "github"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/mxslr",
+      "icon": "instagram"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:marshallrasendria2103@gmail.com",
+      "icon": "mail"
+    }
+  ],
+  "linkedinBadge": {
+    "vanity": "mxslr",
+    "profileUrl": "https://id.linkedin.com/in/mxslr"
+  },
+  "experience": [
+    {
+      "company": "PT Data Labs Analytics",
+      "role": "Artificial Intelligence Engineer",
+      "type": "Internship",
+      "period": "June 2026 - Present",
+      "location": "Indonesia",
+      "logo": "",
+      "url": "",
+      "summary": "Delivering AI/ML solutions for an enterprise client as part of the outsourced engineering team.",
+      "points": [
+        "Contributing across the full model development lifecycle in a client-facing engagement under confidentiality constraints.",
+        "Translating business requirements into technical solutions while following production standards for reproducibility and code quality.",
+        "Hands-on with Google Cloud Platform, using BigQuery for large-scale data querying and processing."
+      ],
+      "images": []
+    },
+    {
+      "company": "HUMIC Engineering Research Center",
+      "role": "Machine Learning Engineer",
+      "type": "Internship",
+      "period": "April 2026 - Present",
+      "location": "Telkom University",
+      "logo": "",
+      "url": "",
+      "summary": "Medical imaging research on mammography classification, from literature review to a published IEEE paper.",
+      "points": [
+        "Conducted a systematic literature review across IEEE, Scopus, and Google Scholar, exposing that many 98 to 99 percent accuracy claims come from patient-level data leakage.",
+        "Built leakage-free PyTorch pipelines on CBIS-DDSM and trained 6 architectures, from EfficientNet-B3 and ConvNeXt to a CBAM hybrid-fusion network and Mammo-CLIP, across 12+ controlled experiments.",
+        "Raised AUC by about 6 points with clinical-metadata fusion (0.80 to 0.86) and first-authored a 6-page IEEE conference paper."
+      ],
+      "images": []
+    },
+    {
+      "company": "Central Computer Improvement, Telkom University",
+      "role": "Full-Stack Developer",
+      "type": "Organization",
+      "period": "February 2026 - Present",
+      "location": "Telkom University",
+      "logo": "",
+      "url": "",
+      "summary": "Backend developer on a 6-person team building a vendor marketplace platform.",
+      "points": [
+        "Developed 90+ RESTful API endpoints using NestJS, PostgreSQL, and Prisma ORM, with full API documentation and Postman test coverage.",
+        "Configured Supabase, the Midtrans payment gateway, SMTP, and Google OAuth integrations.",
+        "Independently built a document automation platform for Telkom University's student directorate, cutting processing time from 2+ hours to minutes for 50+ student organizations."
+      ],
+      "images": []
+    },
+    {
+      "company": "ERP Laboratory, Telkom University",
+      "role": "Laboratory Assistant",
+      "type": "Organization",
+      "period": "March 2026 - Present",
+      "location": "Telkom University",
+      "logo": "",
+      "url": "",
+      "summary": "Leading the Champions Teams program to get more students into competitions.",
+      "points": [
+        "Lead a work program aimed at increasing competitive participation among 200+ Information Systems students.",
+        "Research, curate, and publish 10+ national and international competitions every month across Essay, BMC, Design, IT, and Business Plan categories."
+      ],
+      "images": []
+    },
+    {
+      "company": "Telkom University National Futsal Championship",
+      "role": "Sponsorship Staff",
+      "type": "Organization",
+      "period": "December 2025 - May 2026",
+      "location": "Telkom University",
+      "logo": "",
+      "url": "",
+      "summary": "B2B outreach and partnership management for a national sports event.",
+      "points": [
+        "Approached 40+ potential corporate sponsors and ran 15+ pitching sessions, negotiating branding placements and event activations.",
+        "Managed tenant coordination throughout the event, contributing to a 90 percent sponsorship slot fulfilment rate before competition day."
+      ],
+      "images": []
+    }
+  ],
+  "projects": [
+    {
+      "name": "KawanTuli",
+      "tagline": "BISINDO sign language platform with a two-way translator and a 3D avatar teacher",
+      "period": "July 2026 - Present",
+      "role": "Capstone Project",
+      "link": "",
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "TensorFlow.js",
+        "MediaPipe",
+        "react-three-fiber"
+      ],
+      "points": [
+        "All camera inference runs on-device, so no video ever leaves the browser.",
+        "26-class alphabet classifier at 99.31 percent validation accuracy, plus a 32-class word-level 1D CNN at 83.13 percent signer-independent accuracy running at 15 fps with 6 ms median latency.",
+        "Rigged 3D avatar performs sign poses derived from dataset landmarks via analytic inverse kinematics."
+      ],
+      "images": [],
+      "videos": []
+    },
+    {
+      "name": "AMANIN",
+      "tagline": "AI-powered deepfake detection to stop media-based fraud",
+      "period": "April 2026 - May 2026",
+      "role": "Social Project",
+      "link": "",
+      "stack": [
+        "PyTorch",
+        "OpenCV",
+        "Next.js"
+      ],
+      "points": [
+        "Trained a custom deepfake detection model from scratch on 10,000+ images and videos, reaching 90+ percent detection accuracy.",
+        "Built the entire web application independently, end to end.",
+        "Delivered as a social impact initiative educating 40+ residents in a rural village about AI-generated media fraud."
+      ],
+      "images": [
+        "/projects/amanin-1.png",
+        "/projects/amanin-2.png",
+        "/projects/amanin-3.png",
+        "/projects/amanin-4.png"
+      ],
+      "videos": []
+    },
+    {
+      "name": "GAP",
+      "tagline": "API intelligence platform that maps your entire codebase in seconds",
+      "period": "May 2026 - June 2026",
+      "role": "Personal Project",
+      "link": "",
+      "stack": [
+        "TypeScript",
+        "RAG",
+        "Regular Expressions"
+      ],
+      "points": [
+        "Auto-detects routes, request bodies, and backend-to-frontend contract mismatches directly from source code, with zero annotations required.",
+        "Parses entire codebases and generates a full API map in seconds, aimed at teams with undocumented or out-of-sync APIs.",
+        "In active development with open feedback loops from peer engineering teams."
+      ],
+      "images": [
+        "/projects/gap-1.png",
+        "/projects/gap-2.png",
+        "/projects/gap-3.png",
+        "/projects/gap-4.png",
+        "/projects/gap-5.png",
+        "/projects/gap-6.png",
+        "/projects/gap-7.png"
+      ],
+      "videos": []
+    },
+    {
+      "name": "MLCRAFT",
+      "tagline": "Open-source plugin that turns AI coding assistants into a senior ML research engineer",
+      "period": "July 2026",
+      "role": "Open Source",
+      "link": "",
+      "stack": [
+        "Claude Code",
+        "Antigravity",
+        "23 skills",
+        "14 domains"
+      ],
+      "points": [
+        "Auto-routes a plain-language task to the best method across computer vision, medical imaging, NLP, tabular, time-series, and more.",
+        "Encodes a research-first, leakage-aware workflow grounded in 2021 to 2026 literature, with realistic-ceiling estimation and split audits.",
+        "Ships an iterative accuracy-improvement loop with per-problem metric and explainability selection."
+      ],
+      "images": [],
+      "videos": []
+    },
+    {
+      "name": "Mammography Research Paper",
+      "tagline": "Benign vs malignant classification on CBIS-DDSM, done honestly",
+      "period": "April 2026 - July 2026",
+      "role": "HUMIC Research",
+      "link": "",
+      "stack": [
+        "PyTorch",
+        "CBIS-DDSM",
+        "Grad-CAM",
+        "IEEE"
+      ],
+      "points": [
+        "My leakage-free approach produced the best results in a 3-person team and was selected as the final pipeline.",
+        "Benchmarked 6 architectures including a custom CBAM hybrid-fusion model and Mammo-CLIP across 12+ experiments.",
+        "Clinical metadata proved the biggest lever, AUC 0.80 to 0.86, verified with Grad-CAM evidence of correct lesion focus."
+      ],
+      "images": [],
+      "videos": []
+    },
+    {
+      "name": "KKA-DRAFT",
+      "tagline": "Document automation for 50+ student organizations at Telkom University",
+      "period": "April 2026 - June 2026",
+      "role": "Telkom University Student Directorate",
+      "link": "",
+      "stack": [
+        "PHP",
+        "dompdf",
+        "MySQL"
+      ],
+      "points": [
+        "Generates official Proposal Kegiatan and LPJ documents without the chaos of manual formatting.",
+        "Delivered in a self-imposed 3-month sprint with full creative freedom and no predefined specification.",
+        "Solved multi-page PDF rendering with embedded tables, signatures, logos, and pixel-accurate formatting, then passed a penetration test from Telkom's PuTI Directorate."
+      ],
+      "images": [],
+      "videos": []
+    }
+  ],
+  "awards": [
+    {
+      "title": "Finalist",
+      "event": "OpenAI Build Week Hackathon 2026",
+      "org": "OpenAI",
+      "date": "July 2026",
+      "logo": "https://www.google.com/s2/favicons?domain=openai.com&sz=128",
+      "image": ""
+    },
+    {
+      "title": "Finalist",
+      "event": "Refactory Hackathon 2026",
+      "org": "Refactory",
+      "date": "May 2026",
+      "logo": "https://www.google.com/s2/favicons?domain=refactory.id&sz=128",
+      "image": ""
+    },
+    {
+      "title": "Finalist",
+      "event": "Hackfest 2026",
+      "org": "Universitas Ciputra",
+      "date": "April 2026",
+      "logo": "https://www.google.com/s2/favicons?domain=uc.ac.id&sz=128",
+      "image": ""
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Google Advanced Data Analytics Professional",
+      "issuer": "Google",
+      "date": "July 2026",
+      "credentialId": "NZH3N1FVRQVS",
+      "url": "",
+      "image": "",
+      "logo": "https://www.google.com/s2/favicons?domain=google.com&sz=128"
+    },
+    {
+      "title": "SQL (Advanced)",
+      "issuer": "HackerRank",
+      "date": "July 2026",
+      "credentialId": "4fb5ddcd42d8",
+      "url": "",
+      "image": "",
+      "logo": "https://www.google.com/s2/favicons?domain=hackerrank.com&sz=128"
+    },
+    {
+      "title": "Google AI Professional Certificate",
+      "issuer": "Google",
+      "date": "March 2026",
+      "credentialId": "WZVZJWMHBSNY",
+      "url": "",
+      "image": "/sertifikat/sertifikat-3.png",
+      "logo": "https://www.google.com/s2/favicons?domain=google.com&sz=128"
+    },
+    {
+      "title": "IBM AI Developer Professional Certificate",
+      "issuer": "IBM",
+      "date": "March 2026",
+      "credentialId": "QT3HO3K513XT",
+      "url": "",
+      "image": "/sertifikat/sertifikat-2.png",
+      "logo": "https://www.google.com/s2/favicons?domain=ibm.com&sz=128"
+    },
+    {
+      "title": "Microsoft Certified: Azure AI Fundamentals",
+      "issuer": "Microsoft",
+      "date": "September 2025",
+      "credentialId": "Credly",
+      "url": "",
+      "image": "/sertifikat/sertifikat-1.png",
+      "logo": "https://www.google.com/s2/favicons?domain=microsoft.com&sz=128"
+    }
+  ],
+  "brands": {
+    "title": "Companies I have worked with",
+    "items": [
+      {
+        "name": "PT Data Labs Analytics",
+        "logo": ""
+      },
+      {
+        "name": "HUMIC Engineering",
+        "logo": "https://www.google.com/s2/favicons?domain=humic.telkomuniversity.ac.id&sz=128"
+      },
+      {
+        "name": "Telkom University",
+        "logo": "https://www.google.com/s2/favicons?domain=telkomuniversity.ac.id&sz=128"
+      },
+      {
+        "name": "Central Computer Improvement",
+        "logo": "https://www.google.com/s2/favicons?domain=cci.telkomuniversity.ac.id&sz=128"
+      },
+      {
+        "name": "ERP Laboratory",
+        "logo": "https://www.google.com/s2/favicons?domain=telkomuniversity.ac.id&sz=128"
+      }
+    ]
+  },
+  "playground": {
+    "gallery": {
+      "intro": "A few frames from outside the terminal.",
+      "photos": [
+        {
+          "src": "/foto-profil.jpg",
+          "caption": "That's me"
+        }
+      ]
+    },
+    "music": {
+      "intro": "What plays while the models train.",
+      "tracks": [
+        {
+          "title": "Add your song",
+          "artist": "Drop an mp3 in public/music and edit data/portfolio.json",
+          "src": "/music/track-1.mp3"
+        }
+      ],
+      "spotifyEmbed": ""
+    },
+    "faq": [
+      {
+        "q": "Why does your portfolio look like Microsoft Word?",
+        "a": "Because every portfolio looks the same, and nobody expects a resume that is literally a document you can poke at. Also, I spend half my life in documents anyway."
+      },
+      {
+        "q": "Can I really edit this page?",
+        "a": "Yes. Switch to Editing mode at the top right, select some text, and go wild with the toolbar. Refresh the page and everything is back to normal. No commitment issues here."
+      },
+      {
+        "q": "AI/ML or full-stack, which one are you really?",
+        "a": "Both, and that is the point. I train the model, then I build the product around it. A model without a product is a very expensive CSV file."
+      },
+      {
+        "q": "What are you looking for right now?",
+        "a": "Interesting problems, good teams, and opportunities in AI/ML engineering or full-stack roles. If you have one of those, the comment section and my inbox are open."
+      },
+      {
+        "q": "What is the most honest thing on this site?",
+        "a": "The research numbers. I spent a whole internship proving that most 99 percent accuracy claims in mammography papers come from data leakage. My 0.86 AUC is boring and real, and I am proud of it."
+      }
+    ]
+  }
+}

@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google"; // Font ala programmer
 import { ThemeProvider } from "next-themes";
+import { portfolio } from "@/lib/portfolio";
 import "./globals.css";
 
-// Menginisialisasi font
-const jetBrains = JetBrains_Mono({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Mxslr | Portfolio",
-  description: "Marshall Rasendria Mahendra's Personal Portfolio",
+  title: portfolio.meta.siteTitle,
+  description: portfolio.meta.siteDescription,
+  metadataBase: new URL(portfolio.meta.website),
+  openGraph: {
+    title: portfolio.meta.siteTitle,
+    description: portfolio.meta.siteDescription,
+    type: "website",
+  },
   icons: {
     icon: [
       { url: "/icon.png" },
@@ -25,10 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" suppressHydrationWarning>
-      <body className={jetBrains.className}>
-        {/* ThemeProvider untuk fitur Light/Dark Mode */}
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
           {children}
         </ThemeProvider>
       </body>

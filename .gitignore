@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -42,3 +43,7 @@ next-env.d.ts
 
 # AI Documentation
 PERFORMANCE_OPTIMIZATIONS.md
+
+# local working copies of the CV (canonical ones live in public/)
+/CV_Marshall Rasendria Mahendra.pdf
+/CV_Marshall_Rasendria_Mahendra.docx
