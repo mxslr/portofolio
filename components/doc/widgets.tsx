@@ -303,6 +303,13 @@ export function ProjectMedia({
   const [viewer, setViewer] = useState<"photos" | "videos" | null>(null);
   if (images.length === 0 && videos.length === 0 && !link) return null;
 
+  let linkLabel = "Open link";
+  try {
+    linkLabel = new URL(link).hostname.replace(/^www\./, "");
+  } catch {
+    /* keep fallback label */
+  }
+
   const btn =
     "inline-flex items-center gap-2 border border-pageline px-3 py-1.5 text-[12.5px] font-medium text-pagetext hover:border-accent hover:text-accent";
 
@@ -321,7 +328,7 @@ export function ProjectMedia({
           rel="noreferrer"
         >
           <ExternalLink size={14} strokeWidth={1.7} />
-          Visit project
+          {linkLabel}
         </a>
       )}
       {images.length > 0 && (

@@ -299,7 +299,7 @@
       "tagline": "Document automation for 50+ student organizations at Telkom University",
       "period": "April 2026 - June 2026",
       "role": "Telkom University Student Directorate",
-      "link": "",
+      "link": "https://kka-draft.telkomuniversity.ac.id/",
       "stack": [
         "PHP",
         "dompdf",
