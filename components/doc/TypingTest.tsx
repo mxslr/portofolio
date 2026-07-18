@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard, RotateCcw, Trophy } from "lucide-react";
 import { checkName } from "@/lib/moderation";
+import { getClientId } from "@/lib/client-id";
 
 interface Row {
   name: string;
@@ -17,18 +18,6 @@ interface Board {
 }
 
 type Phase = "idle" | "running" | "done";
-
-function getClientId() {
-  let id = localStorage.getItem("typing-client-id");
-  if (!id) {
-    id =
-      typeof crypto !== "undefined" && "randomUUID" in crypto
-        ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
-    localStorage.setItem("typing-client-id", id);
-  }
-  return id;
-}
 
 export default function TypingTest({
   sentences,

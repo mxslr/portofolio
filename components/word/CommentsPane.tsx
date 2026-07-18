@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MessageSquare, Send, X } from "lucide-react";
+import { getClientId } from "@/lib/client-id";
 
 interface Comment {
   id: string;
@@ -39,6 +40,7 @@ export default function CommentsPane({ open, onClose, onCount }: Props) {
   const [body, setBody] = useState("");
   const [posting, setPosting] = useState(false);
   const [postError, setPostError] = useState("");
+  const [alreadyPosted, setAlreadyPosted] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
 
   const load = useCallback(async () => {
@@ -71,6 +73,7 @@ export default function CommentsPane({ open, onClose, onCount }: Props) {
       return;
     }
     setAuthor(saved);
+    setAlreadyPosted(localStorage.getItem("word-commented") === "1");
   }, []);
 
   const submit = async (e: React.FormEvent) => {
@@ -82,13 +85,23 @@ export default function CommentsPane({ open, onClose, onCount }: Props) {
       const res = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ author: author.trim(), body: body.trim() }),
+        body: JSON.stringify({
+          author: author.trim(),
+          body: body.trim(),
+          clientId: getClientId(),
+        }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
+        if (data?.already) {
+          localStorage.setItem("word-commented", "1");
+          setAlreadyPosted(true);
+        }
         throw new Error(data?.error ?? "Could not post the comment.");
       }
       localStorage.setItem("word-comment-name", author.trim());
+      localStorage.setItem("word-commented", "1");
+      setAlreadyPosted(true);
       setBody("");
       await load();
       listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
@@ -118,6 +131,12 @@ export default function CommentsPane({ open, onClose, onCount }: Props) {
       </div>
 
       {/* new comment */}
+      {alreadyPosted ? (
+        <p className="mx-4 mb-3 border border-line bg-commentbg p-3 text-[12.5px] leading-relaxed text-dim">
+          Your comment is already on this document. One comment per visitor keeps
+          the margins tidy.
+        </p>
+      ) : (
       <form onSubmit={submit} className="mx-4 mb-3 border border-line bg-commentbg p-3">
         <input
           className="mb-2 w-full border-b border-line bg-transparent pb-1.5 text-[13px] text-ink outline-none placeholder:text-dim"
@@ -151,6 +170,7 @@ export default function CommentsPane({ open, onClose, onCount }: Props) {
           <p className="mt-2 text-[12px] text-[#c42b1c] dark:text-[#ff9c8f]">{postError}</p>
         )}
       </form>
+      )}
 
       {/* list */}
       <div ref={listRef} className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">

@@ -119,6 +119,53 @@ export function containsProfanity(input: string): boolean {
 
 const URL_RE = /(https?:\/\/|www\.|\.com\b|\.id\b|\.net\b|\.xyz\b|bit\.ly)/i;
 
+/* html, script, and prompt injection attempts */
+const INJECTION_RE = [
+  /<[a-z!/][^>]*>/i,                                  // any html-looking tag
+  /javascript\s*:/i,
+  /on\w+\s*=/i,                                       // onerror=, onclick=
+  /\{\{.*\}\}|\$\{.*\}/,                              // template injection
+  /ignore\s+(all\s+)?(previous|prior|above)\s+(instructions|prompts?)/i,
+  /disregard\s+(all\s+)?(previous|prior|above)/i,
+  /abaikan\s+(semua\s+)?(instruksi|perintah)/i,
+  /system\s+prompt/i,
+  /you\s+are\s+(now\s+)?(an?\s+)?(ai|assistant|llm)/i,
+  /jailbreak|do\s+anything\s+now/i,
+];
+
+/* online gambling promo, matched on normalized text */
+const GAMBLING_STRONG = [
+  "slotgacor",
+  "maxwin",
+  "togel",
+  "casino",
+  "judionline",
+  "situsjudi",
+  "situsslot",
+  "bonusnewmember",
+  "depositpulsa",
+  "rtplive",
+  "linkalternatif",
+  "bandarjudi",
+  "judibola",
+  "sabung",
+];
+const GAMBLING_WORDS = ["judi", "gacor", "slot", "poker", "jackpot", "taruhan", "bandar", "rtp"];
+
+function isSuspicious(input: string): string | null {
+  if (INJECTION_RE.some((re) => re.test(input))) {
+    return "That looks like code or an instruction, not a message.";
+  }
+  const { tokens, collapsed } = normalize(input);
+  if (
+    GAMBLING_STRONG.some((w) => collapsed.includes(w)) ||
+    GAMBLING_WORDS.some((w) => tokens.includes(w))
+  ) {
+    return "Gambling promotion is not welcome here.";
+  }
+  return null;
+}
+
 export interface Verdict {
   ok: boolean;
   reason?: string;
@@ -138,6 +185,8 @@ export function checkName(raw: string): Verdict {
   if (containsProfanity(name)) {
     return { ok: false, reason: "Pick a friendlier name. This is a family document." };
   }
+  const sus = isSuspicious(name);
+  if (sus) return { ok: false, reason: sus };
   return { ok: true };
 }
 
@@ -152,6 +201,8 @@ export function checkComment(raw: string): Verdict {
   if (containsProfanity(body)) {
     return { ok: false, reason: "Keep it civil. This document has feelings." };
   }
+  const sus = isSuspicious(body);
+  if (sus) return { ok: false, reason: sus };
   // crude flood check: one character repeated endlessly
   if (/(.)\1{15,}/.test(body)) {
     return { ok: false, reason: "That looks like keyboard spam." };

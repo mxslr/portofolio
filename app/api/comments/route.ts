@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkComment, checkName } from "@/lib/moderation";
 
 const TABLE = "portfolio_comments";
+const CLIENT_ID_RE = /^[A-Za-z0-9-]{8,64}$/;
 
 function supabaseHeaders() {
   const key = process.env.SUPABASE_ANON_KEY ?? "";
@@ -43,7 +44,7 @@ async function fetchRetry(url: string, init: RequestInit) {
 export async function GET() {
   if (!configured()) return NextResponse.json([]);
   const res = await fetchRetry(
-    `${process.env.SUPABASE_URL}/rest/v1/${TABLE}?select=id,author,body,created_at&order=created_at.desc&limit=100`,
+    `${process.env.SUPABASE_URL}/rest/v1/${TABLE}?select=id,author,body,created_at&order=created_at.desc&limit=50`,
     { headers: supabaseHeaders(), next: { revalidate: 0 } }
   );
   if (!res.ok) {
@@ -69,7 +70,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let payload: { author?: unknown; body?: unknown };
+  let payload: { author?: unknown; body?: unknown; clientId?: unknown };
   try {
     payload = await req.json();
   } catch {
@@ -81,6 +82,11 @@ export async function POST(req: NextRequest) {
       ? payload.author.trim().replace(/\s+/g, " ")
       : "";
   const body = typeof payload.body === "string" ? payload.body.trim() : "";
+  const clientId = typeof payload.clientId === "string" ? payload.clientId : "";
+
+  if (!CLIENT_ID_RE.test(clientId)) {
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  }
 
   const nameVerdict = checkName(author);
   if (!nameVerdict.ok) {
@@ -91,14 +97,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: bodyVerdict.reason }, { status: 400 });
   }
 
+  // one comment per browser
+  const dup = await fetchRetry(
+    `${process.env.SUPABASE_URL}/rest/v1/${TABLE}?select=id&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,
+    { headers: supabaseHeaders() }
+  );
+  if (dup.ok && ((await dup.json()) as unknown[]).length > 0) {
+    return NextResponse.json(
+      { error: "You already left a comment on this document. One per visitor.", already: true },
+      { status: 409 }
+    );
+  }
+
   const res = await fetchRetry(`${process.env.SUPABASE_URL}/rest/v1/${TABLE}`, {
     method: "POST",
     headers: { ...supabaseHeaders(), Prefer: "return=minimal" },
-    body: JSON.stringify({ author, body, ip_hash: ipHash(ip) }),
+    body: JSON.stringify({ author, body, client_id: clientId, ip_hash: ipHash(ip) }),
   });
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
+    if (text.includes("duplicate key")) {
+      return NextResponse.json(
+        { error: "You already left a comment on this document. One per visitor.", already: true },
+        { status: 409 }
+      );
+    }
     if (text.includes("rate_limited")) {
       return NextResponse.json(
         { error: "You have hit the comment limit for now. Come back later." },

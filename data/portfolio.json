@@ -181,8 +181,16 @@
         "26-class alphabet classifier at 99.31 percent validation accuracy, plus a 32-class word-level 1D CNN at 83.13 percent signer-independent accuracy running at 15 fps with 6 ms median latency.",
         "Rigged 3D avatar performs sign poses derived from dataset landmarks via analytic inverse kinematics."
       ],
-      "images": [],
-      "videos": []
+      "images": [
+        "/projects/kawantuli-1.webp",
+        "/projects/kawantuli-2.webp",
+        "/projects/kawantuli-3.webp",
+        "/projects/kawantuli-4.webp",
+        "/projects/kawantuli-5.webp"
+      ],
+      "videos": [
+        "/projects/kawantuli-demo.webm"
+      ]
     },
     {
       "name": "AMANIN",
@@ -200,8 +208,15 @@
         "Built the entire web application independently, end to end.",
         "Delivered as a social impact initiative educating 40+ residents in a rural village about AI-generated media fraud."
       ],
-      "images": [],
-      "videos": []
+      "images": [
+        "/projects/amanin-1.webp",
+        "/projects/amanin-2.webp",
+        "/projects/amanin-3.webp",
+        "/projects/amanin-4.webp"
+      ],
+      "videos": [
+        "/projects/amanin-demo.webm"
+      ]
     },
     {
       "name": "GAP",
@@ -220,7 +235,6 @@
         "In active development with open feedback loops from peer engineering teams."
       ],
       "images": [
-        "https://res.cloudinary.com/dphlz9br4/image/upload/q_auto/f_auto/v1780234520/Screenshot_2026-05-31_203504_lyvtcj.png",
         "/projects/gap-1.webp",
         "/projects/gap-2.webp",
         "/projects/gap-3.webp",
@@ -250,7 +264,9 @@
         "Encodes a research-first, leakage-aware workflow grounded in 2021 to 2026 literature, with realistic-ceiling estimation and split audits.",
         "Ships an iterative accuracy-improvement loop with per-problem metric and explainability selection."
       ],
-      "images": [],
+      "images": [
+        "/projects/mlcraft-1.webp"
+      ],
       "videos": []
     },
     {
@@ -270,7 +286,12 @@
         "Benchmarked 6 architectures including a custom CBAM hybrid-fusion model and Mammo-CLIP across 12+ experiments.",
         "Clinical metadata proved the biggest lever, AUC 0.80 to 0.86, verified with Grad-CAM evidence of correct lesion focus."
       ],
-      "images": [],
+      "images": [
+        "/projects/research-1.webp",
+        "/projects/research-2.webp",
+        "/projects/research-3.webp",
+        "/projects/research-4.webp"
+      ],
       "videos": []
     },
     {
@@ -289,8 +310,12 @@
         "Delivered in a self-imposed 3-month sprint with full creative freedom and no predefined specification.",
         "Solved multi-page PDF rendering with embedded tables, signatures, logos, and pixel-accurate formatting, then passed a penetration test from Telkom's PuTI Directorate."
       ],
-      "images": [],
-      "videos": []
+      "images": [
+        "/projects/kka-draft-1.webp"
+      ],
+      "videos": [
+        "/projects/kka-draft-demo.webm"
+      ]
     }
   ],
   "awards": [
