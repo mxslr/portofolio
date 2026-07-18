@@ -41,7 +41,7 @@ Notes:
 
 ## Visitor comments
 
-Comments are shared across all visitors, stored in Supabase (table `portfolio_comments`, project `sapa-db`). Configuration lives in `.env.local`:
+Comments are shared across all visitors, stored in Supabase (tables `portfolio_comments` and `portfolio_typing_scores`, project `portfolio-db`). Configuration lives in `.env.local`:
 
 ```
 SUPABASE_URL=...

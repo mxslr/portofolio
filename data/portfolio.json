@@ -11,7 +11,7 @@
     "documentName": "Marshall_Rasendria_Mahendra.docx",
     "cvPdf": "/CV_Marshall Rasendria Mahendra.pdf",
     "cvDocx": "/CV_Marshall_Rasendria_Mahendra.docx",
-    "profilePhoto": "/foto-profil.jpg",
+    "profilePhoto": "/foto-profil.webp",
     "siteTitle": "Marshall Rasendria Mahendra | Portfolio",
     "siteDescription": "AI/ML Engineer and Full-Stack Developer. Portfolio of Marshall Rasendria Mahendra, styled as a living Word document."
   },
@@ -89,7 +89,7 @@
       "type": "Internship",
       "period": "June 2026 - Present",
       "location": "Indonesia",
-      "logo": "/logos/logo_datalabs.jpg",
+      "logo": "/logos/logo_datalabs.webp",
       "url": "",
       "summary": "Delivering AI/ML solutions for an enterprise client as part of the outsourced engineering team.",
       "points": [
@@ -105,7 +105,7 @@
       "type": "Internship",
       "period": "April 2026 - Present",
       "location": "Telkom University",
-      "logo": "/logos/logo_humic.jpg",
+      "logo": "/logos/logo_humic.webp",
       "url": "",
       "summary": "Medical imaging research on mammography classification, from literature review to a published IEEE paper.",
       "points": [
@@ -121,7 +121,7 @@
       "type": "Organization",
       "period": "February 2026 - Present",
       "location": "Telkom University",
-      "logo": "/logos/logo_cci.jpg",
+      "logo": "/logos/logo_cci.webp",
       "url": "",
       "summary": "Backend developer on a 6-person team building a vendor marketplace platform.",
       "points": [
@@ -137,7 +137,7 @@
       "type": "Organization",
       "period": "March 2026 - Present",
       "location": "Telkom University",
-      "logo": "/logos/logo_erp.jpg",
+      "logo": "/logos/logo_erp.webp",
       "url": "",
       "summary": "Leading the Champions Teams program to get more students into competitions.",
       "points": [
@@ -152,7 +152,7 @@
       "type": "Organization",
       "period": "December 2025 - May 2026",
       "location": "Telkom University",
-      "logo": "/logos/logo_tunfc.jpg",
+      "logo": "/logos/logo_tunfc.webp",
       "url": "",
       "summary": "B2B outreach and partnership management for a national sports event.",
       "points": [
@@ -220,15 +220,18 @@
         "In active development with open feedback loops from peer engineering teams."
       ],
       "images": [
-        "/projects/gap-1.png",
-        "/projects/gap-2.png",
-        "/projects/gap-3.png",
-        "/projects/gap-4.png",
-        "/projects/gap-5.png",
-        "/projects/gap-6.png",
-        "/projects/gap-7.png"
+        "https://res.cloudinary.com/dphlz9br4/image/upload/q_auto/f_auto/v1780234520/Screenshot_2026-05-31_203504_lyvtcj.png",
+        "/projects/gap-1.webp",
+        "/projects/gap-2.webp",
+        "/projects/gap-3.webp",
+        "/projects/gap-4.webp",
+        "/projects/gap-5.webp",
+        "/projects/gap-6.webp",
+        "/projects/gap-7.webp"
       ],
-      "videos": []
+      "videos": [
+        "https://res.cloudinary.com/dphlz9br4/video/upload/q_auto/f_auto/v1780234562/demo-gap_yefmki.mp4"
+      ]
     },
     {
       "name": "MLCRAFT",
@@ -323,7 +326,7 @@
       "date": "July 2026",
       "credentialId": "NZH3N1FVRQVS",
       "url": "",
-      "image": "/sertifikat/advanced-data-analytics.png",
+      "image": "/sertifikat/advanced-data-analytics.webp",
       "logo": "https://www.google.com/s2/favicons?domain=google.com&sz=128"
     },
     {
@@ -332,7 +335,7 @@
       "date": "July 2026",
       "credentialId": "4fb5ddcd42d8",
       "url": "",
-      "image": "/sertifikat/sql-advanced.png",
+      "image": "/sertifikat/sql-advanced.webp",
       "logo": "https://www.google.com/s2/favicons?domain=hackerrank.com&sz=128"
     },
     {
@@ -341,7 +344,7 @@
       "date": "March 2026",
       "credentialId": "WZVZJWMHBSNY",
       "url": "",
-      "image": "/sertifikat/sertifikat-3.png",
+      "image": "/sertifikat/sertifikat-3.webp",
       "logo": "https://www.google.com/s2/favicons?domain=google.com&sz=128"
     },
     {
@@ -350,7 +353,7 @@
       "date": "March 2026",
       "credentialId": "QT3HO3K513XT",
       "url": "",
-      "image": "/sertifikat/sertifikat-2.png",
+      "image": "/sertifikat/sertifikat-2.webp",
       "logo": "https://www.google.com/s2/favicons?domain=ibm.com&sz=128"
     },
     {
@@ -359,7 +362,7 @@
       "date": "September 2025",
       "credentialId": "Credly",
       "url": "",
-      "image": "/sertifikat/sertifikat-1.png",
+      "image": "/sertifikat/sertifikat-1.webp",
       "logo": "https://www.google.com/s2/favicons?domain=microsoft.com&sz=128"
     }
   ],
@@ -368,19 +371,19 @@
     "items": [
       {
         "name": "PT Data Labs Analytics",
-        "logo": "/logos/logo_datalabs.jpg"
+        "logo": "/logos/logo_datalabs.webp"
       },
       {
         "name": "HUMIC Engineering",
-        "logo": "/logos/logo_humic.jpg"
+        "logo": "/logos/logo_humic.webp"
       },
       {
         "name": "Astra",
-        "logo": "/logos/logo_astra.jpg"
+        "logo": "/logos/logo_astra.webp"
       },
       {
         "name": "Kalbe",
-        "logo": "/logos/logo_kalbe.jpg"
+        "logo": "/logos/logo_kalbe.webp"
       }
     ]
   },
@@ -389,19 +392,19 @@
       "intro": "A few frames from outside the terminal.",
       "photos": [
         {
-          "src": "/gallery/gallery1.jpeg",
+          "src": "/gallery/gallery1.webp",
           "caption": "@ Apple Developer Institute"
         },
         {
-          "src": "/gallery/gallery2.jpeg",
+          "src": "/gallery/gallery2.webp",
           "caption": "W Gf"
         },
         {
-          "src": "/gallery/gallery3.jpeg",
+          "src": "/gallery/gallery3.webp",
           "caption": "@ DWP 2024"
         },
         {
-          "src": "/gallery/gallery4.jpeg",
+          "src": "/gallery/gallery4.webp",
           "caption": "@ Mountain"
         }
       ]
@@ -413,7 +416,7 @@
           "title": "Future - Life Is Good ft. Drake",
           "artist": "Future, Drake",
           "src": "/music/song1.mp3",
-          "cover": "/logos/albumcover.jpg"
+          "cover": "/logos/albumcover.webp"
         }
       ],
       "spotifyEmbed": ""
