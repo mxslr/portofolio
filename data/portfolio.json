@@ -197,7 +197,7 @@
       "tagline": "AI-powered deepfake detection to stop media-based fraud",
       "period": "April 2026 - May 2026",
       "role": "Social Project",
-      "link": "",
+      "link": "https://www.kompasiana.com/bagasharis0833/6a20ef8ec925c4459b21f5c2/mahasiswa-telkom-university-edukasi-warga-sukapura-hadapi-penipuan-ai-melalui-program-amanin",
       "stack": [
         "PyTorch",
         "OpenCV",
@@ -417,20 +417,36 @@
       "intro": "A few frames from outside the terminal.",
       "photos": [
         {
-          "src": "/gallery/gallery1.webp",
+          "src": "/gallery/gallery (1).webp",
           "caption": "@ Apple Developer Institute"
         },
         {
-          "src": "/gallery/gallery2.webp",
+          "src": "/gallery/gallery (2).webp",
           "caption": "W Gf"
         },
         {
-          "src": "/gallery/gallery3.webp",
+          "src": "/gallery/gallery (3).webp",
           "caption": "@ DWP 2024"
         },
         {
-          "src": "/gallery/gallery4.webp",
+          "src": "/gallery/gallery (4).webp",
           "caption": "@ Mountain"
+        },
+        {
+          "src": "/gallery/gallery (5).webp",
+          "caption": "@ Beach"
+        },
+        {
+          "src": "/gallery/gallery (6).webp",
+          "caption": "@ Refactory Hackathon"
+        },
+        {
+          "src": "/gallery/gallery (7).webp",
+          "caption": "@ OpenAI Hackathon"
+        },
+        {
+          "src": "/gallery/gallery (8).webp",
+          "caption": "@ Hackfest 2026"
         }
       ]
     },
