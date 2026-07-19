@@ -2,13 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { MessageCircle, Send, X } from "lucide-react";
+import { Send, X } from "lucide-react";
 import assistant from "@/data/assistant.json";
 
 interface Msg {
   role: "user" | "assistant";
   content: string;
-  sticker?: boolean;
+  sticker?: string;
 }
 
 const SESSION_LIMIT = 10;
@@ -25,17 +25,21 @@ function getClientId() {
   return id;
 }
 
-function LaughSticker() {
+function LaughSticker({ src }: { src: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/sticker-laugh.gif"
+      src={src}
       alt="Laughing sticker"
       width={120}
       height={120}
       className="h-28 w-28 object-contain"
     />
   );
+}
+
+function pickSticker() {
+  return assistant.stickers[Math.floor(Math.random() * assistant.stickers.length)];
 }
 
 export default function Assistant() {
@@ -128,7 +132,11 @@ export default function Assistant() {
       if (!res.ok) throw new Error(data?.error ?? "Something went wrong.");
       setMsgs((m) => [
         ...m,
-        { role: "assistant", content: data.text, sticker: Boolean(data.sticker) },
+        {
+          role: "assistant",
+          content: data.text,
+          sticker: data.sticker ? pickSticker() : undefined,
+        },
       ]);
     } catch (err) {
       setMsgs((m) => [
@@ -165,14 +173,21 @@ export default function Assistant() {
             </button>
           )}
           <button
-            aria-label="Chat with Marshall's assistant"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white hover:opacity-90"
+            aria-label="Chat with Baymax, Marshall's assistant"
+            className="h-12 w-12 overflow-hidden rounded-full border border-line hover:opacity-90"
             onClick={() => {
               setTeaser(null);
               setOpen(true);
             }}
           >
-            <MessageCircle size={21} strokeWidth={1.8} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={assistant.avatar}
+              alt="Baymax"
+              width={48}
+              height={48}
+              className="h-full w-full object-cover"
+            />
           </button>
         </div>
       )}
@@ -185,9 +200,14 @@ export default function Assistant() {
         >
           {/* header */}
           <header className="flex items-center gap-2.5 border-b border-line bg-chrome px-3 py-2.5">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-[11px] font-semibold text-white">
-              MR
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={assistant.avatar}
+              alt="Baymax"
+              width={32}
+              height={32}
+              className="h-8 w-8 shrink-0 rounded-full border border-line object-cover"
+            />
             <div className="min-w-0 flex-1 leading-tight">
               <p className="truncate text-[13px] font-semibold text-ink">
                 {assistant.name}
@@ -215,7 +235,7 @@ export default function Assistant() {
               {msgs.map((m, i) =>
                 m.sticker ? (
                   <div key={i} className="flex flex-col items-start gap-1 text-ink">
-                    <LaughSticker />
+                    <LaughSticker src={m.sticker} />
                     <p className="max-w-[85%] text-[12.5px] text-dim">{m.content}</p>
                   </div>
                 ) : (
