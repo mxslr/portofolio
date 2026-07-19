@@ -46,6 +46,7 @@ import {
   X,
 } from "lucide-react";
 import CommentsPane from "./CommentsPane";
+import Assistant from "./Assistant";
 
 /* ---------------------------------------------------------------- types */
 
@@ -1117,6 +1118,9 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
           </button>
         </div>
       </footer>
+
+      {/* ============================================= AI ASSISTANT */}
+      <Assistant />
 
       {/* ============================================= MINI TOOLBAR */}
       {mini && editing && (

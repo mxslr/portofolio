@@ -50,6 +50,10 @@ SUPABASE_ANON_KEY=...
 
 When deploying (Vercel), add both variables in the project's environment settings. Without them the comment pane still renders but posting is disabled.
 
+## AI assistant
+
+A floating chat (bottom right) answers visitor questions about Marshall only, in English or Indonesian. Its knowledge and personality live in `data/assistant.json` (facts, greeting, teaser lines, sticker replies) so you can edit them without touching code. It needs `OPENAI_API_KEY` (and optional `OPENAI_MODEL`, default gpt-4o-mini) in `.env.local` and in Vercel. Limits: 10 messages per browser session, 6 per minute and 40 per day per IP, short replies, off topic questions get a laughing sticker.
+
 ## Features cheat sheet
 
 - **Viewing / Editing mode** (top right): in Editing mode visitors can select text and use Bold, Italic, Underline, Highlight, and font size from the ribbon or the floating mini toolbar. Everything resets on refresh. Ctrl+Click follows links while editing.
