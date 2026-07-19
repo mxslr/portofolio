@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { Send, X } from "lucide-react";
+import { MessageCircle, Send, X } from "lucide-react";
 import assistant from "@/data/assistant.json";
 
 interface Msg {
@@ -174,20 +174,13 @@ export default function Assistant() {
           )}
           <button
             aria-label="Chat with Baymax, Marshall's assistant"
-            className="h-12 w-12 overflow-hidden rounded-full border border-line hover:opacity-90"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white hover:opacity-90"
             onClick={() => {
               setTeaser(null);
               setOpen(true);
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={assistant.avatar}
-              alt="Baymax"
-              width={48}
-              height={48}
-              className="h-full w-full object-cover"
-            />
+            <MessageCircle size={21} strokeWidth={1.8} />
           </button>
         </div>
       )}

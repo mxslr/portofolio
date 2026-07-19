@@ -252,7 +252,7 @@
       "tagline": "Open-source plugin that turns AI coding assistants into a senior ML research engineer",
       "period": "July 2026",
       "role": "Open Source",
-      "link": "",
+      "link": "https://github.com/mxslr/mlcraft",
       "stack": [
         "Claude Code",
         "Antigravity",
