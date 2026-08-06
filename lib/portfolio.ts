@@ -20,7 +20,6 @@ export interface Experience {
   logo: string;
   url: string;
   summary: string;
-  points: string[];
   images: string[];
 }
 

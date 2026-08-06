@@ -52,12 +52,7 @@ function ExperienceEntry({ e }: { e: Experience }) {
           {e.period}
           {e.location ? ` · ${e.location}` : ""}
         </p>
-        <p className="mb-1.5">{e.summary}</p>
-        <ul className="list-disc space-y-1 pl-5 marker:text-pagedim">
-          {e.points.map((pt) => (
-            <li key={pt}>{pt}</li>
-          ))}
-        </ul>
+        <p>{e.summary}</p>
         <ImagesGrid images={e.images} alt={e.company} />
       </div>
     </article>

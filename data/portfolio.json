@@ -84,35 +84,36 @@
   },
   "experience": [
     {
+      "company": "PT Bumi Resources Tbk",
+      "role": "Machine Learning Engineer",
+      "type": "Internship",
+      "period": "August 2026 - Present",
+      "location": "South Jakarta",
+      "logo": "/logos/logo_bumi.jpg",
+      "url": "",
+      "summary": "Building machine learning solutions for one of Indonesia's largest energy and mining groups, taking use cases from data exploration through to models that support day to day business decisions.",
+      "images": []
+    },
+    {
       "company": "PT Data Labs Analytics",
       "role": "Artificial Intelligence Engineer",
       "type": "Internship",
-      "period": "June 2026 - Present",
+      "period": "June 2026 - August 2026",
       "location": "Indonesia",
       "logo": "/logos/logo_datalabs.webp",
       "url": "",
-      "summary": "Delivering AI/ML solutions for an enterprise client as part of the outsourced engineering team.",
-      "points": [
-        "Contributing across the full model development lifecycle in a client-facing engagement under confidentiality constraints.",
-        "Translating business requirements into technical solutions while following production standards for reproducibility and code quality.",
-        "Hands-on with Google Cloud Platform, using BigQuery for large-scale data querying and processing."
-      ],
+      "summary": "Delivered AI/ML solutions for an enterprise client as part of the outsourced engineering team, working across the full model development lifecycle on Google Cloud Platform with BigQuery for large-scale data processing.",
       "images": []
     },
     {
       "company": "HUMIC Engineering Research Center",
       "role": "Machine Learning Engineer",
       "type": "Internship",
-      "period": "April 2026 - Present",
+      "period": "April 2026 - July 2026",
       "location": "Telkom University",
       "logo": "/logos/logo_humic.webp",
       "url": "",
-      "summary": "Medical imaging research on mammography classification, from literature review to a published IEEE paper.",
-      "points": [
-        "Conducted a systematic literature review across IEEE, Scopus, and Google Scholar, exposing that many 98 to 99 percent accuracy claims come from patient-level data leakage.",
-        "Built leakage-free PyTorch pipelines on CBIS-DDSM and trained 6 architectures, from EfficientNet-B3 and ConvNeXt to a CBAM hybrid-fusion network and Mammo-CLIP, across 12+ controlled experiments.",
-        "Raised AUC by about 6 points with clinical-metadata fusion (0.80 to 0.86) and first-authored a 6-page IEEE conference paper."
-      ],
+      "summary": "Medical imaging research on mammography classification. Built leakage-free PyTorch pipelines on CBIS-DDSM across 12+ controlled experiments, lifted AUC from 0.80 to 0.86 with clinical-metadata fusion, and first-authored a 6-page IEEE conference paper.",
       "images": []
     },
     {
@@ -123,12 +124,7 @@
       "location": "Telkom University",
       "logo": "/logos/logo_cci.webp",
       "url": "",
-      "summary": "Backend developer on a 6-person team building a vendor marketplace platform.",
-      "points": [
-        "Developed 90+ RESTful API endpoints using NestJS, PostgreSQL, and Prisma ORM, with full API documentation and Postman test coverage.",
-        "Configured Supabase, the Midtrans payment gateway, SMTP, and Google OAuth integrations.",
-        "Independently built a document automation platform for Telkom University's student directorate, cutting processing time from 2+ hours to minutes for 50+ student organizations."
-      ],
+      "summary": "Backend developer on a 6-person team building a vendor marketplace, shipping 90+ REST endpoints with NestJS, PostgreSQL, and Prisma alongside Supabase, Midtrans, and Google OAuth integrations.",
       "images": []
     },
     {
@@ -139,11 +135,7 @@
       "location": "Telkom University",
       "logo": "/logos/logo_erp.webp",
       "url": "",
-      "summary": "Leading the Champions Teams program to get more students into competitions.",
-      "points": [
-        "Lead a work program aimed at increasing competitive participation among 200+ Information Systems students.",
-        "Research, curate, and publish 10+ national and international competitions every month across Essay, BMC, Design, IT, and Business Plan categories."
-      ],
+      "summary": "Lead the Champions Teams program, curating and publishing 10+ national and international competitions every month for 200+ Information Systems students.",
       "images": []
     },
     {
@@ -154,11 +146,7 @@
       "location": "Telkom University",
       "logo": "/logos/logo_tunfc.webp",
       "url": "",
-      "summary": "B2B outreach and partnership management for a national sports event.",
-      "points": [
-        "Approached 40+ potential corporate sponsors and ran 15+ pitching sessions, negotiating branding placements and event activations.",
-        "Managed tenant coordination throughout the event, contributing to a 90 percent sponsorship slot fulfilment rate before competition day."
-      ],
+      "summary": "B2B outreach for a national sports event. Approached 40+ corporate sponsors across 15+ pitching sessions, reaching a 90 percent sponsorship slot fulfilment rate before competition day.",
       "images": []
     }
   ],
@@ -394,6 +382,10 @@
   "brands": {
     "title": "Companies I have worked with",
     "items": [
+      {
+        "name": "PT Bumi Resources Tbk",
+        "logo": "/logos/logo_bumi.jpg"
+      },
       {
         "name": "PT Data Labs Analytics",
         "logo": "/logos/logo_datalabs.webp"
