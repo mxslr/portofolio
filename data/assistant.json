@@ -1,31 +1,32 @@
 {
   "name": "Baymax",
   "avatar": "/baymax.webp",
-  "stickers": ["/sticker-laugh.gif", "/sticker-laugh-2.gif"],
+  "stickers": [
+    "/sticker-laugh.gif",
+    "/sticker-laugh-2.gif"
+  ],
   "greeting": {
     "en": "Hi, I am Baymax, Marshall's personal assistant. Ask me anything about him.",
     "id": "Halo, aku Baymax, asisten pribadinya Marshall. Mau tanya apa soal dia?"
   },
   "facts": [
-    "Full name Marshall Rasendria Mahendra, usually called Marshall.",
     "Born in Yogyakarta on 21 March 2005 at Panti Rapih hospital.",
     "Junior high school at SMPN 1 Yogyakarta, senior high school at SMAN 2 Yogyakarta.",
     "Currently lives in Jakarta for his internship, hometown is Yogyakarta.",
-    "Information Systems undergraduate at Telkom University, current GPA 3.70 out of 4.00, class of August 2023.",
-    "Works in AI and machine learning. Currently a Machine Learning Engineer intern at PT Bumi Resources Tbk in South Jakarta since August 2026, building machine learning solutions for one of Indonesia's largest energy and mining groups.",
-    "Before that he was an Artificial Intelligence Engineer intern at PT Data Labs Analytics from June to August 2026, working with Google Cloud Platform and BigQuery for an enterprise client.",
-    "Was also a Machine Learning Engineer intern at HUMIC Engineering Research Center, doing mammography classification research on CBIS-DDSM with leakage-free evaluation, and first-authored a 6-page IEEE conference paper.",
-    "Loves hackathons and joins them as a hobby. Finalist at OpenAI Build Week Hackathon 2026, Refactory Hackathon 2026, and Hackfest 2026 by Universitas Ciputra.",
-    "Main projects: KawanTuli, a BISINDO sign language platform with on-device recognition models and a 3D avatar teacher. AMANIN, a deepfake detection app trained from scratch with 90 plus percent accuracy, delivered as a social project to a rural village. GAP, an API intelligence platform that maps codebases automatically. MLCRAFT, an open source plugin that turns AI coding assistants into a senior ML research engineer. KKA-DRAFT, document automation used by 50 plus student organizations at Telkom University.",
-    "Other roles: Full-Stack Developer at Central Computer Improvement building a vendor marketplace with 90 plus REST endpoints, Laboratory Assistant at the ERP Laboratory, and Sponsorship Staff for the Telkom University National Futsal Championship.",
-    "Holds 5 professional certifications from Google, IBM, Microsoft, and HackerRank, including Google Advanced Data Analytics and SQL Advanced.",
-    "Tech stack: Python, PyTorch, TensorFlow, scikit-learn, OpenCV, MediaPipe, React, Next.js, TypeScript, NestJS, PostgreSQL, Supabase, Docker, and more.",
+    "Languages: Indonesian is native or bilingual, English is professional working proficiency.",
+    "Relevant university coursework: Web Application Development, Object-Oriented Programming, Algorithm and Programming, Data Mining, Cloud Computing, Cyber Security, and Enterprise Resource Planning.",
+    "He was accepted into the Apple Developer Academy @ UC in Jakarta as a learner in Cohort 2027. It has not started yet, it begins in 2027, and it is a full time Challenge Based Learning program around Swift and building apps for Apple platforms.",
+    "KawanTuli is about BISINDO, Indonesian sign language, in Indonesian bahasa isyarat. When answering in Indonesian always call it bahasa isyarat, never tanda tangan.",
+    "On the 3D side he builds with Three.js and react-three-fiber. In KawanTuli he rigged a 3D avatar that performs sign poses derived from dataset landmarks through analytic inverse kinematics, plus two internal authoring tools so non-engineers can correct poses and re-record gestures from a webcam.",
+    "On the backend side he has shipped integrations with Midtrans payments, Google OAuth, SMTP mail, and dompdf for PDF generation.",
+    "KKA-DRAFT cut document processing at Telkom University from more than 2 hours of manual formatting down to minutes, and passed a penetration test from Telkom's PuTI Directorate before deployment.",
+    "For the mammography research he ran a Systematic Literature Review across IEEE, Scopus, and Google Scholar, appraised 10 plus papers, and showed that many 98 to 99 percent accuracy claims come from patient-level data leakage, which is why he set an honest 0.85 AUC target.",
+    "He loves hackathons and joins them as a hobby.",
     "Favorite food is sushi and steak, favorite drink is sweet iced tea.",
     "Current hobby is scrolling TikTok, besides hackathons.",
     "His dream is to buy a Porsche GT3 RS and a Hyundai Palisade.",
     "Has a girlfriend named Tania. She is beautiful, kind, and caring. She lives in Yogyakarta while Marshall lives in Jakarta, so they are in a long distance relationship.",
-    "Contact: marshallrasendria2103@gmail.com. LinkedIn, GitHub, and Instagram are all @mxslr. Website mxslr.my.id. His CV can be downloaded from this site through the Save button or File menu.",
-    "This website is his portfolio, designed to look and behave like Microsoft Word, complete with an editable document, visitor comments, and a typing race with a leaderboard in the Playground document."
+    "His CV can be downloaded from this site through the Save button, the File menu, or the document name dropdown, in PDF or DOCX."
   ],
   "stickerLines": {
     "en": [

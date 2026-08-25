@@ -1,5 +1,6 @@
 import { portfolio } from "@/lib/portfolio";
-import { CommentsCta, GalleryGrid, MusicPlayer } from "./widgets";
+import { CommentsCta, GalleryGrid } from "./widgets";
+import MoreText from "./MoreText";
 import TypingTest from "./TypingTest";
 
 const p = portfolio;
@@ -27,14 +28,6 @@ export default function PlaygroundSheets() {
       </Sheet>
 
       <Sheet>
-        <h2 id="music" className="doc-h2">
-          Now Playing
-        </h2>
-        <p className="mb-5 text-pagedim">{p.playground.music.intro}</p>
-        <MusicPlayer tracks={p.playground.music.tracks} spotifyEmbed={p.playground.music.spotifyEmbed} />
-      </Sheet>
-
-      <Sheet>
         <h2 id="typing" className="doc-h2">
           Typing Race
         </h2>
@@ -53,7 +46,9 @@ export default function PlaygroundSheets() {
           {p.playground.faq.map((f) => (
             <div key={f.q}>
               <dt className="mb-1 font-bold">Q: {f.q}</dt>
-              <dd className="border-l-2 border-pageline pl-4 text-pagetext">{f.a}</dd>
+              <dd className="border-l-2 border-pageline pl-4 text-pagetext">
+                <MoreText text={f.a} limit={220} />
+              </dd>
             </div>
           ))}
         </dl>

@@ -1,7 +1,14 @@
 import Image from "next/image";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
-import { portfolio, type Experience, type Project } from "@/lib/portfolio";
+import {
+  portfolio,
+  type Experience,
+  type Project,
+  type Publication,
+} from "@/lib/portfolio";
 import { BrandStrip, CommentsCta, LinkedInBadge, Logo, ProjectMedia } from "./widgets";
+import MoreText from "./MoreText";
+import PdfViewer from "./PdfViewer";
 
 const p = portfolio;
 
@@ -36,7 +43,10 @@ function ExperienceEntry({ e }: { e: Experience }) {
     <article className="flex gap-4">
       <Logo src={e.logo} name={e.company} size={46} className="mt-1" />
       <div className="min-w-0 flex-1">
-        <h3 className="text-[16px] font-bold leading-snug">{e.role}</h3>
+        <h3 className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[16px] font-bold leading-snug">
+          {e.role}
+          {e.status && <span className="doc-tag">{e.status}</span>}
+        </h3>
         <p className="text-[13.5px]">
           {e.url ? (
             <a href={e.url} target="_blank" rel="noreferrer">
@@ -52,7 +62,9 @@ function ExperienceEntry({ e }: { e: Experience }) {
           {e.period}
           {e.location ? ` · ${e.location}` : ""}
         </p>
-        <p>{e.summary}</p>
+        <p>
+          <MoreText text={e.summary} />
+        </p>
         <ImagesGrid images={e.images} alt={e.company} />
       </div>
     </article>
@@ -79,7 +91,9 @@ function ProjectEntry({ pr }: { pr: Project }) {
       <p className="mb-1.5 italic text-pagedim">{pr.tagline}</p>
       <ul className="list-disc space-y-1 pl-5 marker:text-pagedim">
         {pr.points.map((pt) => (
-          <li key={pt}>{pt}</li>
+          <li key={pt}>
+            <MoreText text={pt} />
+          </li>
         ))}
       </ul>
       <p className="mt-2 flex flex-wrap gap-x-2 gap-y-1 text-[12px] text-pagedim">
@@ -95,11 +109,40 @@ function ProjectEntry({ pr }: { pr: Project }) {
   );
 }
 
+function PublicationEntry({ pub }: { pub: Publication }) {
+  return (
+    <article>
+      <h3 className="text-[16px] font-bold leading-snug">
+        {pub.url ? (
+          <a href={pub.url} target="_blank" rel="noreferrer">
+            {pub.title}
+          </a>
+        ) : (
+          pub.title
+        )}
+      </h3>
+      <p className="mt-1 text-[13.5px] font-semibold">{pub.publisher}</p>
+      <p className="text-[12.5px] text-pagedim">
+        {pub.issue}
+        {pub.role ? ` · ${pub.role}` : ""}
+      </p>
+      <p className="mb-4 text-[12.5px] text-pagedim">{pub.authors}</p>
+
+      <PdfViewer src={pub.pdf} title="Article" pages={pub.pages} />
+
+      <p className="mt-4">
+        <MoreText text={pub.description} limit={260} />
+      </p>
+    </article>
+  );
+}
+
 /* -------------------------------------------------------------- sheets */
 
 export default function ResumeSheets() {
-  const work = p.experience.filter((e) => e.type === "Internship");
-  const orgs = p.experience.filter((e) => e.type !== "Internship");
+  const WORK_TYPES = ["Internship", "Apprenticeship"];
+  const work = p.experience.filter((e) => WORK_TYPES.includes(e.type));
+  const orgs = p.experience.filter((e) => !WORK_TYPES.includes(e.type));
 
   return (
     <>
@@ -130,8 +173,10 @@ export default function ResumeSheets() {
             <Image
               src={p.meta.profilePhoto}
               alt={p.meta.name}
-              width={320}
-              height={400}
+              width={900}
+              height={1200}
+              placeholder={p.meta.profilePhotoBlur ? "blur" : "empty"}
+              blurDataURL={p.meta.profilePhotoBlur || undefined}
               priority
               className="h-auto w-full"
               sizes="160px"
@@ -140,7 +185,7 @@ export default function ResumeSheets() {
           <p className="mb-3 text-[16px] font-bold">{p.about.greeting}</p>
           {p.about.paragraphs.map((para) => (
             <p key={para.slice(0, 24)} className="mb-3">
-              {para}
+              <MoreText text={para} limit={320} />
             </p>
           ))}
           <span className="clear-both block" />
@@ -212,7 +257,21 @@ export default function ResumeSheets() {
         </Sheet>
       ))}
 
-      {/* --------------------------------------- page 7: awards + certifications */}
+      {/* ------------------------------------------------ page 7: publication */}
+      {p.publications.length > 0 && (
+        <Sheet>
+          <h2 id="publications" className="doc-h2">
+            Publication
+          </h2>
+          <div className="space-y-10">
+            {p.publications.map((pub) => (
+              <PublicationEntry key={pub.title} pub={pub} />
+            ))}
+          </div>
+        </Sheet>
+      )}
+
+      {/* --------------------------------------- page 8: awards + certifications */}
       <Sheet>
         <h2 id="awards" className="doc-h2">
           Honors and Awards
@@ -282,7 +341,7 @@ export default function ResumeSheets() {
         </ul>
       </Sheet>
 
-      {/* ------------------------------------------------ page 8: brands + connect */}
+      {/* ------------------------------------------------ page 9: brands + connect */}
       <Sheet>
         <h2 id="brands" className="doc-h2">
           Brands on My Journey

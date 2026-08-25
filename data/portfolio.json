@@ -11,9 +11,10 @@
     "documentName": "Marshall_Rasendria_Mahendra.docx",
     "cvPdf": "/CV_Marshall Rasendria Mahendra.pdf",
     "cvDocx": "/CV_Marshall_Rasendria_Mahendra.docx",
-    "profilePhoto": "/foto-profil.webp",
+    "profilePhoto": "/foto-profil-baru.webp",
     "siteTitle": "Marshall Rasendria Mahendra | Portfolio",
-    "siteDescription": "AI/ML Engineer and Full-Stack Developer. Portfolio of Marshall Rasendria Mahendra, styled as a living Word document."
+    "siteDescription": "AI/ML Engineer and Full-Stack Developer. Portfolio of Marshall Rasendria Mahendra, styled as a living Word document.",
+    "profilePhotoBlur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAQAgCdASoMABAAA8BgJZQCw7Yv1ZjccLgAAPawo6HA7NZ4gXuSFcylXxN5+W/NcS+vKr1rCy2F/xe8lN9ACgGpYgvUoAXVU4+E5ASboL22FfJgT/v7u3+8f3e/lmn+QklyArSzg3HZY6HroAA="
   },
   "about": {
     "greeting": "Hi, I'm Marshall.",
@@ -84,6 +85,18 @@
   },
   "experience": [
     {
+      "company": "Apple Developer Academy @ UC",
+      "role": "Learner, Cohort 2027",
+      "type": "Apprenticeship",
+      "period": "2027",
+      "location": "Jakarta",
+      "logo": "/logos/apple-developer.png",
+      "url": "https://developeracademy.uc.ac.id/",
+      "status": "Soon",
+      "summary": "Accepted into the 2027 cohort of Apple's app development academy at Universitas Ciputra Jakarta, a full time program built around Challenge Based Learning, Swift, and shipping real apps on Apple platforms. Starts in 2027.",
+      "images": []
+    },
+    {
       "company": "PT Bumi Resources Tbk",
       "role": "Machine Learning Engineer",
       "type": "Internship",
@@ -92,7 +105,8 @@
       "logo": "/logos/logo_bumi.jpg",
       "url": "",
       "summary": "Building machine learning solutions for one of Indonesia's largest energy and mining groups, taking use cases from data exploration through to models that support day to day business decisions.",
-      "images": []
+      "images": [],
+      "status": ""
     },
     {
       "company": "PT Data Labs Analytics",
@@ -103,7 +117,8 @@
       "logo": "/logos/logo_datalabs.webp",
       "url": "",
       "summary": "Delivered AI/ML solutions for an enterprise client as part of the outsourced engineering team, working across the full model development lifecycle on Google Cloud Platform with BigQuery for large-scale data processing.",
-      "images": []
+      "images": [],
+      "status": ""
     },
     {
       "company": "HUMIC Engineering Research Center",
@@ -114,7 +129,8 @@
       "logo": "/logos/logo_humic.webp",
       "url": "",
       "summary": "Medical imaging research on mammography classification. Built leakage-free PyTorch pipelines on CBIS-DDSM across 12+ controlled experiments, lifted AUC from 0.80 to 0.86 with clinical-metadata fusion, and first-authored a 6-page IEEE conference paper.",
-      "images": []
+      "images": [],
+      "status": ""
     },
     {
       "company": "Central Computer Improvement, Telkom University",
@@ -125,7 +141,8 @@
       "logo": "/logos/logo_cci.webp",
       "url": "",
       "summary": "Backend developer on a 6-person team building a vendor marketplace, shipping 90+ REST endpoints with NestJS, PostgreSQL, and Prisma alongside Supabase, Midtrans, and Google OAuth integrations.",
-      "images": []
+      "images": [],
+      "status": ""
     },
     {
       "company": "ERP Laboratory, Telkom University",
@@ -136,7 +153,8 @@
       "logo": "/logos/logo_erp.webp",
       "url": "",
       "summary": "Lead the Champions Teams program, curating and publishing 10+ national and international competitions every month for 200+ Information Systems students.",
-      "images": []
+      "images": [],
+      "status": ""
     },
     {
       "company": "Telkom University National Futsal Championship",
@@ -147,7 +165,8 @@
       "logo": "/logos/logo_tunfc.webp",
       "url": "",
       "summary": "B2B outreach for a national sports event. Approached 40+ corporate sponsors across 15+ pitching sessions, reaching a 90 percent sponsorship slot fulfilment rate before competition day.",
-      "images": []
+      "images": [],
+      "status": ""
     }
   ],
   "projects": [
@@ -410,49 +429,61 @@
       "photos": [
         {
           "src": "/gallery/gallery (1).webp",
-          "caption": "@ Apple Developer Institute"
+          "caption": "@ Apple Developer Institute",
+          "width": 2268,
+          "height": 4032,
+          "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAwCdASoMABUAPwFsrU8rJiQiMAgBYCAJYwAAW9GufPoBXY0DAAD9CMfYx9/UvkgORzN0/KKMF1K22xuSjR9yejBaeD38QSj+Izc4j+C5wfKoTebGcGIwLQAAAA=="
         },
         {
           "src": "/gallery/gallery (2).webp",
-          "caption": "W Gf"
+          "caption": "W Gf",
+          "width": 3120,
+          "height": 4160,
+          "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABQAgCdASoMABAAA8BgJZACdH8AFxRmvZ0wVgAA/ls4gMRG4BCFfYUGKB4rfnRQXi9N0ihXLhvyEajBbLJvskG/eiebyqREWLgKHeHnwYOQuY+oOusAAA=="
         },
         {
           "src": "/gallery/gallery (3).webp",
-          "caption": "@ DWP 2024"
+          "caption": "@ DWP 2024",
+          "width": 2340,
+          "height": 4160,
+          "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwBACdASoMABUAPwFqrE6rJiQiMAgBYCAJZgCdIDZCucKh5FjeXUXHzgAA/uRgydrMMltbWemQmqHCcgbJ0HDvcCEqNkMJ4JMBX432BQpBJHIG+DUUXm5GggrrKfu9PltBsexH+KVokXPgAAA="
         },
         {
           "src": "/gallery/gallery (4).webp",
-          "caption": "@ Mountain"
+          "caption": "@ Mountain",
+          "width": 2340,
+          "height": 4160,
+          "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADwAwCdASoMABUAPwForE6rJaQiMAgBYCAJQBOgBDujuJCZJs6PPpsAAP6XHkC4G7pDaFqwTkAmuQmIFP4TLtjCdKfHjiZdXAUJXuYjIdzdv4k+A1of4+vK7qLgBr2HLlmCUr5KPMloVyWNcbj4807YiLBMFnLo8AA="
         },
         {
           "src": "/gallery/gallery (5).webp",
-          "caption": "@ Beach"
+          "caption": "@ Beach",
+          "width": 2340,
+          "height": 4160,
+          "blur": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADwAwCdASoMABUAPwFqrE6rJiQiMAgBYCAJZACdMoABwnVjsbgTHRwAAP01JtnBQIIOrGdHWFOohTkKzz5KlyQQHnEXfviv+p3mTFYQWyvDT5D4aD0uhIWt36xgwY3TS8l9Y8Kes0h/7Uk13U7kHAAA"
         },
         {
           "src": "/gallery/gallery (6).webp",
-          "caption": "@ Refactory Hackathon"
+          "caption": "@ Refactory Hackathon",
+          "width": 2340,
+          "height": 4160,
+          "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACQAwCdASoMABUAPwFqrU8rJiQiMAgBYCAJYwCnFCDFTsTWs/GAAMp3hD4V3AhPa8kGxbkFDcS925dQLlFgcjUJD2MqcYo78hPvsyY/7CaXUgY6o8G4rS2nIWLnioAA"
         },
         {
           "src": "/gallery/gallery (7).webp",
-          "caption": "@ OpenAI Hackathon"
+          "caption": "@ OpenAI Hackathon",
+          "width": 2340,
+          "height": 4160,
+          "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADwAwCdASoMABUAPwFqrE6rJiQiMAgBYCAJYwCdACKOtJ4pbRnQQTP4APoMS/ouoLSayOCnzGRrNoYtmdNH4Q4b/zgr7k3SniJtLJ0cyWw/U/7ksQlv3/ABu/CoifVMMrryPASSc/7Y6flW4lySZhkQjF7NsHtZAAA="
         },
         {
           "src": "/gallery/gallery (8).webp",
-          "caption": "@ Hackfest 2026"
+          "caption": "@ Hackfest 2026",
+          "width": 2340,
+          "height": 4160,
+          "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAQBACdASoMABUAPwFsrE6rJiQiMAgBYCAJbACdMoABwwTjwfzqULcxAAD518BPPhz4BFKnwBG/Ykezd4pRHNslUn2z2BhxL9oBKRjAUyQ3sANsrzPlX9VlY9PXepsR+0ILfZOWDSev2BQdw3adJhw6+3CO7qzFpXCDf4EsAAA="
         }
       ]
-    },
-    "music": {
-      "intro": "What plays while the models train.",
-      "tracks": [
-        {
-          "title": "Future - Life Is Good ft. Drake",
-          "artist": "Future, Drake",
-          "src": "/music/song1.mp3",
-          "cover": "/logos/albumcover.webp"
-        }
-      ],
-      "spotifyEmbed": ""
     },
     "faq": [
       {
@@ -492,5 +523,19 @@
         "A good API is like a good joke, if you have to explain it, it is not that good."
       ]
     }
-  }
+  },
+  "publications": [
+    {
+      "title": "Controlled Comparison of Multimodal Hybrid Deep Learning for Benign-Malignant Mammogram Classification on CBIS-DDSM",
+      "publisher": "JADIMI: Journal of AI-Driven Informatics and Management Information",
+      "issue": "Vol. 1 No. 1, August 2026, pp 20-33",
+      "date": "August 2026",
+      "role": "First author",
+      "authors": "Marshall Rasendria Mahendra, Farhan Muamar Fawwaz, Naisya Aghis Nabila, Muhammad Rakha",
+      "pdf": "/publications/controlled-comparison-mammogram-cbis-ddsm.pdf",
+      "pages": 14,
+      "url": "",
+      "description": "Many deep learning studies on CBIS-DDSM report accuracy above 95 percent, yet they partition the archive at image level, so views of one patient land in both the training and the test set and the figures cannot be trusted. This paper rebuilds the comparison honestly. Six models are trained on two image representations, the whole mammogram and the lesion region of interest, under one identical training recipe: EfficientNet-B3, ConvNeXt-Tiny, a gated hybrid fusion of the two with the Convolutional Block Attention Module, two variants that fuse seven clinical descriptors through a perceptron, and a Mammo-CLIP backbone pretrained on mammograms. The official CBIS-DDSM partition is enforced at patient level across 1,104 disjoint patients, and the BI-RADS assessment is dropped to avoid circular prediction. The strongest model, Hybrid Fusion with CBAM and clinical metadata, reaches an AUC of 0.856 on regions of interest and 0.845 on whole images. Clinical metadata is the largest single source of gain, close to six AUC points on both representations, and Grad-CAM shows attention settling on the lesion rather than on artifacts."
+    }
+  ]
 }

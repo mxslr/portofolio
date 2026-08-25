@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useTheme } from "next-themes";
 import {
   ChevronLeft,
@@ -8,13 +9,10 @@ import {
   ExternalLink,
   Image as ImageIcon,
   MessageSquare,
-  Music,
-  Pause,
-  Play,
   Video,
   X,
 } from "lucide-react";
-import type { GalleryPhoto, Track } from "@/lib/portfolio";
+import type { GalleryPhoto } from "@/lib/portfolio";
 
 /* ------------------------------------------------------- LinkedIn badge */
 
@@ -170,6 +168,9 @@ export interface MediaItem {
   type: "image" | "video";
   src: string;
   caption?: string;
+  width?: number;
+  height?: number;
+  blur?: string;
 }
 
 export function MediaLightbox({
@@ -205,6 +206,12 @@ export function MediaLightbox({
   }, [onClose, step]);
 
   const item = items[index];
+  const neighbours =
+    items.length > 1
+      ? [items[(index + 1) % items.length], items[(index - 1 + items.length) % items.length]].filter(
+          (n) => n.type === "image" && n.src !== item.src
+        )
+      : [];
 
   return (
     <div
@@ -232,7 +239,7 @@ export function MediaLightbox({
       </div>
 
       <div
-        className="flex min-h-0 flex-1 items-center justify-center px-2 pb-4 sm:px-14"
+        className="relative flex min-h-0 flex-1 items-center justify-center px-2 pb-4 sm:px-14"
         onClick={(e) => e.stopPropagation()}
       >
         {item.type === "video" ? (
@@ -244,6 +251,19 @@ export function MediaLightbox({
             preload="metadata"
             className="max-h-full max-w-full"
           />
+        ) : item.width && item.height ? (
+          <Image
+            key={item.src}
+            src={item.src}
+            alt={item.caption ?? `media ${index + 1}`}
+            width={item.width}
+            height={item.height}
+            placeholder={item.blur ? "blur" : "empty"}
+            blurDataURL={item.blur}
+            priority
+            sizes="100vw"
+            className="max-h-full w-auto object-contain"
+          />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -252,6 +272,22 @@ export function MediaLightbox({
             alt={item.caption ?? `media ${index + 1}`}
             className="max-h-full max-w-full object-contain"
           />
+        )}
+
+        {/* warm the neighbours so swiping does not wait on the network */}
+        {neighbours.map((n) =>
+          n.width && n.height ? (
+            <Image
+              key={`pre-${n.src}`}
+              src={n.src}
+              alt=""
+              aria-hidden
+              width={n.width}
+              height={n.height}
+              sizes="100vw"
+              className="pointer-events-none absolute h-px w-px opacity-0"
+            />
+          ) : null
         )}
       </div>
 
@@ -377,132 +413,42 @@ export function GalleryGrid({ photos }: { photos: GalleryPhoto[] }) {
             onClick={() => setActive(i)}
             aria-label={`Open photo: ${p.caption}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={p.src} alt={p.caption} loading="lazy" className="block w-full" />
+            {/*
+              Every photo is fetched up front instead of lazily: the first row
+              gets a preload link through `priority`, the rest start straight
+              after it. A blurred inline preview stands in while bytes arrive,
+              so a slow connection sees the picture, not an empty box.
+            */}
+            <Image
+              src={p.src}
+              alt={p.caption}
+              width={p.width || 1200}
+              height={p.height || 1600}
+              placeholder={p.blur ? "blur" : "empty"}
+              blurDataURL={p.blur || undefined}
+              sizes="(max-width: 640px) 50vw, (max-width: 880px) 33vw, 260px"
+              {...(i < 3 ? { priority: true } : { loading: "eager" as const })}
+              className="block h-auto w-full"
+            />
           </button>
         ))}
       </div>
 
       {active !== null && (
         <MediaLightbox
-          items={photos.map((p) => ({ type: "image", src: p.src, caption: p.caption }))}
+          items={photos.map((p) => ({
+            type: "image",
+            src: p.src,
+            caption: p.caption,
+            width: p.width,
+            height: p.height,
+            blur: p.blur,
+          }))}
           start={active}
           onClose={() => setActive(null)}
         />
       )}
     </>
-  );
-}
-
-/* --------------------------------------------------------------- music */
-
-export function MusicPlayer({
-  tracks,
-  spotifyEmbed,
-}: {
-  tracks: Track[];
-  spotifyEmbed: string;
-}) {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [current, setCurrent] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [error, setError] = useState(false);
-
-  const play = (i: number) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    setError(false);
-    if (i === current && playing) {
-      audio.pause();
-      setPlaying(false);
-      return;
-    }
-    if (i !== current) {
-      setCurrent(i);
-      audio.src = tracks[i].src;
-    }
-    audio
-      .play()
-      .then(() => setPlaying(true))
-      .catch(() => setError(true));
-  };
-
-  return (
-    <div contentEditable={false} suppressContentEditableWarning>
-      <audio
-        ref={audioRef}
-        src={tracks[0]?.src}
-        onEnded={() => setPlaying(false)}
-        onError={() => playing && setError(true)}
-      />
-      <div className="flex flex-col divide-y divide-pageline border border-pageline">
-        {tracks.map((t, i) => (
-          <div key={`${t.title}-${i}`} className="flex items-center gap-3 px-3 py-2.5">
-            {t.cover ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={t.cover}
-                alt={`${t.title} album cover`}
-                width={44}
-                height={44}
-                loading="lazy"
-                className="h-11 w-11 shrink-0 border border-pageline object-cover"
-              />
-            ) : (
-              <span
-                className="flex h-11 w-11 shrink-0 items-center justify-center border border-pageline text-pagedim"
-                aria-hidden
-              >
-                <Music size={16} strokeWidth={1.6} />
-              </span>
-            )}
-            <button
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-pageline text-pagetext hover:border-accent hover:text-accent"
-              aria-label={playing && current === i ? `Pause ${t.title}` : `Play ${t.title}`}
-              onClick={() => play(i)}
-            >
-              {playing && current === i ? (
-                <Pause size={14} />
-              ) : (
-                <Play size={14} className="ml-0.5" />
-              )}
-            </button>
-            <div className="min-w-0">
-              <p className="truncate text-[14px] font-semibold">{t.title}</p>
-              <p className="truncate text-[12.5px] text-pagedim">{t.artist}</p>
-            </div>
-            {playing && current === i && (
-              <span className="ml-auto flex items-end gap-[2px]" aria-hidden>
-                {[0, 1, 2].map((b) => (
-                  <span
-                    key={b}
-                    className="w-[3px] animate-pulse rounded-sm bg-accent"
-                    style={{ height: 8 + b * 4, animationDelay: `${b * 150}ms` }}
-                  />
-                ))}
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
-      {error && (
-        <p className="mt-2 text-[12.5px] text-pagedim">
-          That track has no audio file yet. Drop an mp3 into public/music and point to it
-          in data/portfolio.json.
-        </p>
-      )}
-      {spotifyEmbed && (
-        <iframe
-          src={spotifyEmbed}
-          width="100%"
-          height="152"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-          className="mt-4 border-0"
-          title="Spotify player"
-        />
-      )}
-    </div>
   );
 }
 

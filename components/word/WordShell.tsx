@@ -31,7 +31,6 @@ import {
   MessageSquare,
   Minus,
   Moon,
-  Music,
   PanelLeft,
   Pencil,
   Plus,
@@ -240,6 +239,72 @@ function RibbonSelect({
   );
 }
 
+/* ------------------------------------------------------ autosave switch */
+
+/**
+ * The AutoSave pill from Word's title bar. Clicking it slides the knob across,
+ * fills the track, flips the label, and runs the short "Saving... / Saved"
+ * status that Word shows the moment AutoSave comes on.
+ */
+function AutoSaveSwitch() {
+  const [on, setOn] = useState(false);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    const pending = timers.current;
+    return () => pending.forEach(clearTimeout);
+  }, []);
+
+  const toggle = () => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+    const next = !on;
+    setOn(next);
+    if (!next) {
+      setStatus("idle");
+      return;
+    }
+    setStatus("saving");
+    timers.current.push(
+      setTimeout(() => setStatus("saved"), 900),
+      setTimeout(() => setStatus("idle"), 3200)
+    );
+  };
+
+  return (
+    <span className="hidden select-none items-center gap-1.5 sm:flex">
+      <button
+        type="button"
+        role="switch"
+        aria-checked={on}
+        aria-label="AutoSave"
+        title={
+          on
+            ? "AutoSave is on. Nothing actually leaves your browser."
+            : "Turn AutoSave on, purely for the satisfaction"
+        }
+        className={`autosave-pill ${on ? "is-on" : ""}`}
+        onClick={toggle}
+      >
+        AutoSave
+        <span className="autosave-track">
+          <span className="autosave-knob" />
+        </span>
+        <span className="autosave-state">{on ? "On" : "Off"}</span>
+      </button>
+      <span
+        aria-live="polite"
+        className={`hidden w-12 text-[11px] text-dim transition-opacity duration-300 lg:inline-block ${
+          status === "idle" ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        {status === "saving" ? "Saving..." : status === "saved" ? "Saved" : ""}
+      </span>
+    </span>
+  );
+}
+
 /* ------------------------------------------------------------ component */
 
 export default function WordShell({ docId, meta, nav, children }: Props) {
@@ -247,7 +312,8 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  const [fontId, setFontId] = useState<string>("segoe");
+  const [docFontId, setDocFontId] = useState<string>("segoe");
+  const [fontUi, setFontUi] = useState<string>("segoe");
   const [sizeV, setSizeV] = useState("3");
   const [editing, setEditing] = useState(false);
   const [banner, setBanner] = useState<"protected" | "editing" | null>(
@@ -272,7 +338,8 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const font = FONTS.find((f) => f.id === fontId) ?? FONTS[0];
+  const docFont = FONTS.find((f) => f.id === docFontId) ?? FONTS[0];
+  const uiFont = FONTS.find((f) => f.id === fontUi) ?? docFont;
   const dark = mounted && resolvedTheme === "dark";
 
   // eslint-disable-next-line react-hooks/set-state-in-effect -- standard next-themes hydration guard
@@ -293,17 +360,46 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   /* ------------------------------------------------ formatting commands */
 
   const exec = useCallback(
-    (cmd: string, value?: string) => {
+    (cmd: string, value?: string, asCss = false) => {
       if (!editing) {
         setEditing(true);
         setBanner("editing");
       }
       // wait a tick so contentEditable is active before the command runs
       requestAnimationFrame(() => {
+        // inline styles survive nesting better than <font> for font-family
+        if (asCss) document.execCommand("styleWithCSS", false, "true");
         document.execCommand(cmd, false, value);
+        if (asCss) document.execCommand("styleWithCSS", false, "false");
       });
     },
     [editing]
+  );
+
+  /* is there live selected text inside the document itself */
+  const hasSelection = useCallback(() => {
+    const sel = window.getSelection();
+    const root = contentRef.current;
+    return Boolean(
+      sel &&
+        root &&
+        !sel.isCollapsed &&
+        sel.rangeCount > 0 &&
+        root.contains(sel.anchorNode) &&
+        root.contains(sel.focusNode)
+    );
+  }, []);
+
+  /* Word behaviour: a font applies to the selection, or to the whole document
+     when nothing is selected */
+  const pickFont = useCallback(
+    (id: string) => {
+      const f = FONTS.find((x) => x.id === id) ?? FONTS[0];
+      setFontUi(id);
+      if (hasSelection()) exec("fontName", f.css, true);
+      else setDocFontId(id);
+    },
+    [exec, hasSelection]
   );
 
   const stepFontSize = useCallback(
@@ -315,12 +411,20 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
     [exec]
   );
 
+  /* the font box mirrors whatever the selection is currently set in */
+  const syncFontBox = useCallback(() => {
+    const raw = (document.queryCommandValue("fontName") || "").toLowerCase();
+    const match = FONTS.find((f) => raw.includes(f.label.toLowerCase()));
+    setFontUi(match ? match.id : docFontId);
+  }, [docFontId]);
+
   /* ------------------------------------------------------ selection mini */
 
   useEffect(() => {
     if (!editing) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- clears toolbar when leaving edit mode
       setMini(null);
+      setFontUi(docFontId);
       return;
     }
     const update = () => {
@@ -332,8 +436,10 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
         !contentRef.current?.contains(sel.anchorNode)
       ) {
         setMini(null);
+        setFontUi(docFontId);
         return;
       }
+      syncFontBox();
       const rect = sel.getRangeAt(0).getBoundingClientRect();
       if (rect.width < 2) {
         setMini(null);
@@ -354,7 +460,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
       document.removeEventListener("keyup", update);
       scroller?.removeEventListener("scroll", off);
     };
-  }, [editing]);
+  }, [editing, docFontId, syncFontBox]);
 
   /* -------------------------------------------------- links in edit mode */
 
@@ -495,7 +601,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
     <div
       ref={shellRef}
       className="flex h-dvh flex-col overflow-hidden"
-      style={{ ["--doc-font" as string]: font.css }}
+      style={{ ["--doc-font" as string]: docFont.css }}
     >
       {/* ============================================= TITLE BAR */}
       <header
@@ -504,13 +610,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
       >
         {/* left cluster */}
         <div className="flex items-center gap-1">
-          <span className="hidden select-none items-center gap-1.5 rounded-full border border-line px-2.5 py-1 text-[11px] text-dim sm:flex">
-            AutoSave
-            <span className="inline-block h-3.5 w-7 rounded-full border border-line bg-hover p-[2px]">
-              <span className="block h-full w-3 rounded-full bg-dim" />
-            </span>
-            Off
-          </span>
+          <AutoSaveSwitch />
           <button
             className={rIconBtn}
             title="Save (downloads my CV)"
@@ -762,11 +862,11 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
             <>
               <RibbonSelect
                 ariaLabel="Font"
-                value={fontId}
+                value={fontUi}
                 options={FONTS.map((f) => ({ v: f.id, label: f.label, css: f.css }))}
-                onPick={setFontId}
+                onPick={pickFont}
                 className="w-44"
-                buttonStyle={{ fontFamily: font.css }}
+                buttonStyle={{ fontFamily: uiFont.css }}
               />
               <RibbonSelect
                 ariaLabel="Font size for selected text"
@@ -840,7 +940,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
               <span className="mx-1 h-6 w-px shrink-0 bg-line" />
               <p className="shrink-0 whitespace-nowrap px-1 text-[12px] text-dim">
                 {editing
-                  ? "Select any text and format it. Refresh to reset."
+                  ? "Select text to restyle just that part. Nothing selected changes the whole document."
                   : "Formatting switches you to Editing mode."}
               </p>
             </>
@@ -857,9 +957,6 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
               <span className="mx-1 h-6 w-px shrink-0 bg-line" />
               <Link href="/playground#gallery" className={rBtn}>
                 <ImageIcon size={14} strokeWidth={1.6} /> Photo gallery
-              </Link>
-              <Link href="/playground#music" className={rBtn}>
-                <Music size={14} strokeWidth={1.6} /> Music
               </Link>
               <Link href="/playground#faq" className={rBtn}>
                 <AlignLeft size={14} strokeWidth={1.6} /> FAQ

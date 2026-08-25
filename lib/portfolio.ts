@@ -19,6 +19,7 @@ export interface Experience {
   location: string;
   logo: string;
   url: string;
+  status: string;
   summary: string;
   images: string[];
 }
@@ -54,6 +55,19 @@ export interface Certification {
   image: string;
 }
 
+export interface Publication {
+  title: string;
+  publisher: string;
+  issue: string;
+  date: string;
+  role: string;
+  authors: string;
+  pdf: string;
+  pages: number;
+  url: string;
+  description: string;
+}
+
 export interface Brand {
   name: string;
   logo: string;
@@ -62,13 +76,9 @@ export interface Brand {
 export interface GalleryPhoto {
   src: string;
   caption: string;
-}
-
-export interface Track {
-  title: string;
-  artist: string;
-  src: string;
-  cover: string;
+  width: number;
+  height: number;
+  blur: string;
 }
 
 export interface Faq {
@@ -90,6 +100,7 @@ export interface Portfolio {
     cvPdf: string;
     cvDocx: string;
     profilePhoto: string;
+    profilePhotoBlur: string;
     siteTitle: string;
     siteDescription: string;
   };
@@ -109,12 +120,12 @@ export interface Portfolio {
   linkedinBadge: { vanity: string; profileUrl: string };
   experience: Experience[];
   projects: Project[];
+  publications: Publication[];
   awards: Award[];
   certifications: Certification[];
   brands: { title: string; items: Brand[] };
   playground: {
     gallery: { intro: string; photos: GalleryPhoto[] };
-    music: { intro: string; tracks: Track[]; spotifyEmbed: string };
     typing: { intro: string; sentencesPerRound: number; sentences: string[] };
     faq: Faq[];
   };

@@ -9,6 +9,7 @@ const NAV = [
   { id: "experience", label: "Work Experience" },
   { id: "organizations", label: "Organizational Experience" },
   { id: "projects", label: "Projects" },
+  { id: "publications", label: "Publication" },
   { id: "awards", label: "Honors and Awards" },
   { id: "certifications", label: "Certifications" },
   { id: "brands", label: "Brands on My Journey" },
