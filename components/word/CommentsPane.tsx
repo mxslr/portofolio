@@ -57,10 +57,8 @@ export default function CommentsPane({ open, onClose, onCount }: Props) {
     }
   }, [onCount]);
 
-  useEffect(() => {
-    load();
-  }, [load]);
-
+  /* the shell already fetched the count for the ribbon badge, so the list only
+     has to be pulled when someone actually opens the margin */
   useEffect(() => {
     if (open) load();
   }, [open, load]);

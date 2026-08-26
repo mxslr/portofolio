@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import gsap from "gsap";
 import { MessageCircle, Send, X } from "lucide-react";
 import assistant from "@/data/assistant.json";
 
@@ -78,25 +77,6 @@ export default function Assistant() {
     return () => clearInterval(timer);
   }, []);
 
-  /* pop animations */
-  useEffect(() => {
-    if (!teaser || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const el = rootRef.current?.querySelector("[data-teaser]");
-    if (el) gsap.from(el, { y: 8, opacity: 0, duration: 0.35, ease: "power3.out" });
-  }, [teaser]);
-
-  useEffect(() => {
-    if (!open || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (panelRef.current) {
-      gsap.from(panelRef.current, {
-        y: 24,
-        opacity: 0,
-        duration: 0.35,
-        ease: "power3.out",
-      });
-    }
-  }, [open]);
-
   const scrollDown = useCallback(() => {
     requestAnimationFrame(() => {
       listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
@@ -163,7 +143,7 @@ export default function Assistant() {
           {teaser && (
             <button
               data-teaser
-              className="max-w-56 border border-line bg-surface px-3 py-2 text-left text-[12.5px] leading-snug text-ink"
+              className="assistant-pop max-w-56 border border-line bg-surface px-3 py-2 text-left text-[12.5px] leading-snug text-ink"
               onClick={() => {
                 setTeaser(null);
                 setOpen(true);
@@ -189,7 +169,7 @@ export default function Assistant() {
       {open && (
         <div
           ref={panelRef}
-          className="fixed inset-0 z-50 flex flex-col border-line bg-surface sm:inset-auto sm:bottom-12 sm:right-5 sm:h-[540px] sm:max-h-[80dvh] sm:w-[372px] sm:border"
+          className="assistant-panel-in fixed inset-0 z-50 flex flex-col border-line bg-surface sm:inset-auto sm:bottom-12 sm:right-5 sm:h-[540px] sm:max-h-[80dvh] sm:w-[372px] sm:border"
         >
           {/* header */}
           <header className="flex items-center gap-2.5 border-b border-line bg-chrome px-3 py-2.5">

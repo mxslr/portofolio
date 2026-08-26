@@ -8,10 +8,10 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import gsap from "gsap";
 import {
   AlignLeft,
   Bold,
@@ -44,8 +44,14 @@ import {
   Undo2,
   X,
 } from "lucide-react";
-import CommentsPane from "./CommentsPane";
-import Assistant from "./Assistant";
+
+/*
+  Neither panel is on screen when the document opens, so neither belongs in the
+  first JavaScript payload. They arrive as their own chunks: the comments pane
+  the first time it is opened, the assistant once the browser goes idle.
+*/
+const CommentsPane = dynamic(() => import("./CommentsPane"), { ssr: false });
+const Assistant = dynamic(() => import("./Assistant"), { ssr: false });
 
 /* ---------------------------------------------------------------- types */
 
@@ -180,13 +186,15 @@ function RibbonSelect({
     setOpen((v) => !v);
   };
 
+  /* the accessible name carries the visible value too, so a spoken command for
+     what the box reads ("Segoe UI") still matches the control */
   const current = options.find((o) => o.v === value);
 
   return (
     <div ref={ref} className={`relative shrink-0 ${className}`}>
       <button
         type="button"
-        aria-label={ariaLabel}
+        aria-label={`${ariaLabel}: ${current?.label ?? value}`}
         aria-haspopup="listbox"
         aria-expanded={open}
         className={`flex h-8 w-full items-center justify-between gap-1.5 rounded border px-2 text-[13px] text-ink hover:bg-hover ${
@@ -333,8 +341,9 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   const [words, setWords] = useState(0);
   const [navQuery, setNavQuery] = useState("");
   const [mini, setMini] = useState<{ x: number; y: number } | null>(null);
+  const [commentsMounted, setCommentsMounted] = useState(false);
+  const [assistantMounted, setAssistantMounted] = useState(false);
 
-  const shellRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -355,6 +364,18 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   const dismissBanner = useCallback(() => {
     sessionStorage.setItem("word-banner-done", "1");
     setBanner(null);
+  }, []);
+
+  /* opening the pane is what pulls its chunk down; it stays mounted afterwards
+     so a visitor does not lose the comments, or their draft, on every close */
+  const showComments = useCallback((next: boolean) => {
+    if (next) setCommentsMounted(true);
+    setCommentsOpen(next);
+  }, []);
+
+  const toggleComments = useCallback(() => {
+    setCommentsMounted(true);
+    setCommentsOpen((v) => !v);
   }, []);
 
   /* ------------------------------------------------ formatting commands */
@@ -526,36 +547,38 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
   /* --------------------------------------------------- open-comments bus */
 
   useEffect(() => {
-    const open = () => setCommentsOpen(true);
+    const open = () => showComments(true);
     window.addEventListener("word:open-comments", open);
     return () => window.removeEventListener("word:open-comments", open);
-  }, []);
+  }, [showComments]);
 
-  /* ------------------------------------------------------------ entrance */
+  /* --------------------------------------------------- deferred trimmings */
 
+  /* the ribbon badge only needs the number, and the assistant only needs to
+     exist before someone reaches for it. Both wait for an idle moment so the
+     document itself never queues behind them. */
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const ctx = gsap.context(() => {
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-anim='titlebar']", { yPercent: -110, duration: 0.45 })
-        .from(
-          "[data-anim='ribbon']",
-          { opacity: 0, y: -14, duration: 0.4 },
-          "-=0.2"
-        )
-        .from(
-          ".word-page",
-          { opacity: 0, y: 32, duration: 0.55, stagger: 0.07, clearProps: "all" },
-          "-=0.15"
-        )
-        .from(
-          "[data-anim='statusbar']",
-          { yPercent: 110, duration: 0.35 },
-          "-=0.4"
-        );
-    }, shellRef);
-    return () => ctx.revert();
+    let alive = true;
+    const run = () => {
+      setAssistantMounted(true);
+      fetch("/api/comments")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          if (alive && Array.isArray(data)) setCommentCount(data.length);
+        })
+        .catch(() => {
+          /* the badge simply stays empty */
+        });
+    };
+    const idle = typeof window.requestIdleCallback === "function";
+    const handle = idle
+      ? window.requestIdleCallback(run, { timeout: 3000 })
+      : window.setTimeout(run, 1500);
+    return () => {
+      alive = false;
+      if (idle) window.cancelIdleCallback(handle);
+      else clearTimeout(handle);
+    };
   }, []);
 
   /* ------------------------------------------------------------- actions */
@@ -599,7 +622,6 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
 
   return (
     <div
-      ref={shellRef}
       className="flex h-dvh flex-col overflow-hidden"
       style={{ ["--doc-font" as string]: docFont.css }}
     >
@@ -772,7 +794,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
           <div className="ml-auto flex items-center gap-1">
             <button
               className={`${rBtn} relative hidden sm:inline-flex`}
-              onClick={() => setCommentsOpen((v) => !v)}
+              onClick={toggleComments}
             >
               <MessageSquare size={14} strokeWidth={1.6} />
               Comments
@@ -809,6 +831,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
             </div>
             <div className="relative" ref={menu === "share" ? menuRef : undefined}>
               <button
+                aria-label="Share"
                 className="inline-flex h-8 items-center gap-1.5 rounded bg-accent px-3 text-[13px] font-medium text-white hover:opacity-90"
                 onClick={() => setMenu(menu === "share" ? "none" : "share")}
               >
@@ -948,10 +971,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
 
           {tab === "insert" && (
             <>
-              <button
-                className={rBtn}
-                onClick={() => setCommentsOpen(true)}
-              >
+              <button className={rBtn} onClick={() => showComments(true)}>
                 <MessageSquare size={14} strokeWidth={1.6} /> New comment
               </button>
               <span className="mx-1 h-6 w-px shrink-0 bg-line" />
@@ -1007,7 +1027,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
               </button>
               <button
                 className={`${rBtn} ${commentsOpen ? "bg-hover" : ""}`}
-                onClick={() => setCommentsOpen((v) => !v)}
+                onClick={toggleComments}
               >
                 <MessageSquare size={14} strokeWidth={1.6} /> Comments
               </button>
@@ -1139,8 +1159,9 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
         )}
 
         {/* document canvas */}
-        <div
+        <main
           ref={scrollRef}
+          aria-label={meta.documentName}
           className="min-w-0 flex-1 overflow-y-auto overscroll-contain"
         >
           <div
@@ -1162,14 +1183,16 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
               document editor. No actual documents were harmed.
             </p>
           </div>
-        </div>
+        </main>
 
         {/* comments pane */}
-        <CommentsPane
-          open={commentsOpen}
-          onClose={() => setCommentsOpen(false)}
-          onCount={setCommentCount}
-        />
+        {commentsMounted && (
+          <CommentsPane
+            open={commentsOpen}
+            onClose={() => showComments(false)}
+            onCount={setCommentCount}
+          />
+        )}
       </div>
 
       {/* ============================================= STATUS BAR */}
@@ -1217,7 +1240,7 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
       </footer>
 
       {/* ============================================= AI ASSISTANT */}
-      <Assistant />
+      {assistantMounted && <Assistant />}
 
       {/* ============================================= MINI TOOLBAR */}
       {mini && editing && (

@@ -186,6 +186,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
   }
 }
@@ -421,3 +422,97 @@ body {
   }
 }
 
+
+/* --------------------------------------------------------- entrance */
+
+/*
+  Word's window assembling itself. This lives in CSS rather than a JS timeline
+  so it starts on the first painted frame instead of waiting for hydration.
+  The sheets only travel, they never fade: a document that starts at opacity 0
+  does not count as painted, which pushed Largest Contentful Paint out by the
+  whole length of the animation. `backwards` fill leaves no transform behind
+  once the run finishes, so nothing inside a sheet inherits a containing block.
+*/
+@keyframes word-drop-in {
+  from {
+    transform: translateY(-110%);
+  }
+}
+@keyframes word-fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+@keyframes word-rise-in {
+  from {
+    transform: translateY(110%);
+  }
+}
+@keyframes word-page-in {
+  from {
+    transform: translateY(32px);
+  }
+}
+
+[data-anim="titlebar"] {
+  animation: word-drop-in 0.45s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+}
+[data-anim="ribbon"] {
+  animation: word-fade-down 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s backwards;
+}
+[data-anim="statusbar"] {
+  animation: word-rise-in 0.35s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s backwards;
+}
+
+.word-page {
+  animation: word-page-in 0.55s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+}
+.word-page:nth-child(2) {
+  animation-delay: 0.07s;
+}
+.word-page:nth-child(3) {
+  animation-delay: 0.14s;
+}
+.word-page:nth-child(4) {
+  animation-delay: 0.21s;
+}
+.word-page:nth-child(5) {
+  animation-delay: 0.28s;
+}
+.word-page:nth-child(6) {
+  animation-delay: 0.35s;
+}
+.word-page:nth-child(7) {
+  animation-delay: 0.42s;
+}
+.word-page:nth-child(8) {
+  animation-delay: 0.49s;
+}
+.word-page:nth-child(9) {
+  animation-delay: 0.56s;
+}
+.word-page:nth-child(n + 10) {
+  animation-delay: 0.63s;
+}
+
+/* the two pops the assistant used to run through GSAP */
+@keyframes assistant-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes assistant-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+.assistant-pop {
+  animation: assistant-pop 0.35s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+}
+.assistant-panel-in {
+  animation: assistant-panel-in 0.35s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+}

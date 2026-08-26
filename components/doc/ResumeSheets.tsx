@@ -179,7 +179,7 @@ export default function ResumeSheets() {
               blurDataURL={p.meta.profilePhotoBlur || undefined}
               priority
               className="h-auto w-full"
-              sizes="160px"
+              sizes="(max-width: 640px) 128px, 160px"
             />
           </span>
           <p className="mb-3 text-[16px] font-bold">{p.about.greeting}</p>

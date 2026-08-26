@@ -34,13 +34,35 @@ export function LinkedInBadge({
   const ref = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [near, setNear] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  /* LinkedIn's badge pulls in two third-party scripts. It sits on the last
+     sheet, so nothing loads until a visitor is actually scrolling towards it. */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "400px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const theme = mounted && resolvedTheme === "dark" ? "dark" : "light";
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !near) return;
     const id = "linkedin-badge-script";
     if (!document.getElementById(id)) {
       const s = document.createElement("script");
@@ -61,7 +83,7 @@ export function LinkedInBadge({
       window.LIRenderAll?.();
     }, 700);
     return () => clearInterval(timer);
-  }, [mounted, theme]);
+  }, [mounted, near, theme]);
 
   return (
     <div ref={ref} contentEditable={false} suppressContentEditableWarning>
@@ -121,19 +143,24 @@ export function Logo({
       </span>
     );
   }
-  return (
+
+  const alt = `${name} logo`;
+  const shared = {
+    width: size,
+    height: size,
+    loading: "lazy" as const,
+    className: `shrink-0 ${round ? "rounded-full object-cover" : "object-contain"} ${className}`,
+    style: { width: size, height: size },
+    onError: () => setFailed(true),
+  };
+
+  /* the favicon services already hand back a thumbnail; everything under
+     /public is a full-size original that has to be cut down to the badge */
+  if (/^https?:/.test(src)) {
     // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={`${name} logo`}
-      width={size}
-      height={size}
-      loading="lazy"
-      className={`shrink-0 ${round ? "rounded-full object-cover" : "object-contain"} ${className}`}
-      style={{ width: size, height: size }}
-      onError={() => setFailed(true)}
-    />
-  );
+    return <img src={src} alt={alt} {...shared} />;
+  }
+  return <Image src={src} alt={alt} {...shared} />;
 }
 
 /* ------------------------------------------------------------ brand strip */
@@ -143,12 +170,13 @@ export function BrandStrip({ items }: { items: { name: string; logo: string }[] 
     <div className="flex flex-wrap items-center gap-x-12 gap-y-7">
       {items.map((b) =>
         b.logo ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             key={b.name}
             src={b.logo}
             alt={`${b.name} logo`}
             title={b.name}
+            width={48}
+            height={48}
             loading="lazy"
             className="h-12 w-auto max-w-48 object-contain grayscale transition duration-300 hover:grayscale-0"
           />
