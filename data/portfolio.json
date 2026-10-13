@@ -20,40 +20,48 @@
     "greeting": "Hi, I'm Marshall.",
     "paragraphs": [
       "I train machine learning models and then build the full-stack platforms that put them in front of real people. Currently an Information Systems undergraduate at Telkom University, currently interning as an AI Engineer, and permanently curious.",
-      "In the past 6 months I shipped 6+ end-to-end products, reached the finalist stage in 3 national hackathons, and collected 5 professional certifications from Google, IBM, Microsoft, and HackerRank. I like my evaluation leakage-free, my APIs documented, and my coffee unsupervised.",
+      "In the past 6 months I shipped 6+ end-to-end products, reached the finalist stage in 3 national hackathons, and collected 6 professional certifications from AWS, Google, IBM, Microsoft, and HackerRank. I like my evaluation leakage-free, my APIs documented, and my coffee unsupervised.",
       "This whole site is one big document. Go ahead, switch to Editing mode and mess with it. It resets when you refresh, just like my sleep schedule."
     ],
     "education": {
       "school": "Telkom University",
       "degree": "Bachelor of Information Systems",
       "period": "August 2023 - Present",
-      "gpa": "3.70 / 4.00",
+      "gpa": "3.69 / 4.00",
       "notes": "Active member of the GDGoC Machine Learning Study Group, 12+ weekly sessions on Python, TensorFlow, and computer vision."
     },
     "skills": [
       {
         "label": "AI and Machine Learning",
-        "items": "Python, TensorFlow, TensorFlow.js, PyTorch, Scikit-Learn, OpenCV, MediaPipe, YOLO, CNNs, transfer learning, Grad-CAM, leakage-free evaluation"
+        "items": "Python, PyTorch, TensorFlow, TensorFlow.js, Scikit-Learn, OpenCV, MediaPipe, YOLO, CNNs, transfer learning, model evaluation, explainability, Grad-CAM"
       },
       {
-        "label": "LLM Applications",
-        "items": "OpenAI API, LangChain, RAG, prompt engineering"
+        "label": "LLM and Document Intelligence",
+        "items": "OpenAI API, LangChain, RAG, prompt engineering, OCR, invoice data extraction, human-in-the-loop validation"
+      },
+      {
+        "label": "Microsoft Power Platform",
+        "items": "Power Apps, Power Automate, AI Builder, TypeScript Office Scripts, approval workflows, Microsoft 365 integration"
+      },
+      {
+        "label": "Enterprise Process Automation",
+        "items": "SAP S/4HANA invoice data mapping, posting-template alignment, Accounts Payable workflows, duplicate detection, audit logging, Odoo"
+      },
+      {
+        "label": "AWS and Generative AI",
+        "items": "Amazon Bedrock, foundation models, agentic AI concepts"
+      },
+      {
+        "label": "Data and Backend",
+        "items": "SQL, Pandas, NumPy, FastAPI, RESTful APIs, PostgreSQL, Docker, Git/GitHub, BigQuery, Google Cloud Platform"
       },
       {
         "label": "Full-Stack Web",
-        "items": "React, Next.js, TypeScript, Node.js, NestJS, Express.js, FastAPI, PHP, Laravel, PostgreSQL, Prisma, Supabase, Docker"
+        "items": "React, Next.js, TypeScript, Node.js, NestJS, Express.js, PHP, Laravel, Prisma, Supabase"
       },
       {
         "label": "3D and Graphics",
         "items": "Three.js, react-three-fiber, on-device inference, real-time computer vision"
-      },
-      {
-        "label": "Data and Analytics",
-        "items": "Pandas, NumPy, SQL, Matplotlib, Jupyter, Kaggle, BigQuery, Google Cloud Platform"
-      },
-      {
-        "label": "Enterprise Systems",
-        "items": "Odoo, SAP"
       }
     ]
   },
@@ -98,13 +106,13 @@
     },
     {
       "company": "PT Bumi Resources Tbk",
-      "role": "Machine Learning Engineer",
+      "role": "Artificial Intelligence Engineer",
       "type": "Internship",
       "period": "August 2026 - Present",
       "location": "South Jakarta",
       "logo": "/logos/logo_bumi.jpg",
       "url": "",
-      "summary": "Building machine learning solutions for one of Indonesia's largest energy and mining groups, taking use cases from data exploration through to models that support day to day business decisions.",
+      "summary": "Building AI-powered Accounts Payable automation with Power Automate, AI Builder, and TypeScript Office Scripts, turning invoice documents into structured financial data mapped across a 43-column SAP S/4HANA posting template, with human review, duplicate detection, and audit logging built in.",
       "images": [],
       "status": ""
     },
@@ -122,13 +130,13 @@
     },
     {
       "company": "HUMIC Engineering Research Center",
-      "role": "Machine Learning Engineer",
+      "role": "Artificial Intelligence Engineer",
       "type": "Internship",
-      "period": "April 2026 - July 2026",
+      "period": "April 2026 - June 2026",
       "location": "Telkom University",
       "logo": "/logos/logo_humic.webp",
       "url": "",
-      "summary": "Medical imaging research on mammography classification. Built leakage-free PyTorch pipelines on CBIS-DDSM across 12+ controlled experiments, lifted AUC from 0.80 to 0.86 with clinical-metadata fusion, and first-authored a 6-page IEEE conference paper.",
+      "summary": "Medical imaging research on mammography classification. Built reproducible, patient-level-split pipelines on CBIS-DDSM and trained six deep learning architectures across whole-image and lesion-region inputs, from hybrid attention to mammography foundation models. The work became a first-author journal article in JADIMI.",
       "images": [],
       "status": ""
     },
@@ -140,7 +148,7 @@
       "location": "Telkom University",
       "logo": "/logos/logo_cci.webp",
       "url": "",
-      "summary": "Backend developer on a 6-person team building a vendor marketplace, shipping 90+ REST endpoints with NestJS, PostgreSQL, and Prisma alongside Supabase, Midtrans, and Google OAuth integrations.",
+      "summary": "Backend developer on a 6-person team building a vendor marketplace with UKM CSC, shipping 90+ REST endpoints with NestJS, PostgreSQL, and Prisma alongside Supabase, Midtrans, SMTP, and Google OAuth integrations. Also independently built KKA-DRAFT, the document automation platform used by 50+ student organizations.",
       "images": [],
       "status": ""
     },
@@ -286,12 +294,12 @@
         "PyTorch",
         "CBIS-DDSM",
         "Grad-CAM",
-        "IEEE"
+        "JADIMI"
       ],
       "points": [
         "My leakage-free approach produced the best results in a 3-person team and was selected as the final pipeline.",
         "Benchmarked 6 architectures including a custom CBAM hybrid-fusion model and Mammo-CLIP across 12+ experiments.",
-        "Clinical metadata proved the biggest lever, AUC 0.80 to 0.86, verified with Grad-CAM evidence of correct lesion focus."
+        "Clinical metadata proved the biggest lever, AUC 0.797 to 0.856 on lesion regions and 0.785 to 0.845 on whole mammograms, verified with Grad-CAM evidence of correct lesion focus."
       ],
       "images": [
         "/projects/research-1.webp",
@@ -352,6 +360,15 @@
     }
   ],
   "certifications": [
+    {
+      "title": "AWS Certified AI Practitioner",
+      "issuer": "Amazon Web Services",
+      "date": "October 2026",
+      "credentialId": "Credly",
+      "url": "",
+      "image": "",
+      "logo": "https://www.google.com/s2/favicons?domain=aws.amazon.com&sz=128"
+    },
     {
       "title": "Google Advanced Data Analytics Professional",
       "issuer": "Google",

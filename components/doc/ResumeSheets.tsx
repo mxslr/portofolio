@@ -303,7 +303,7 @@ export default function ResumeSheets() {
         </h2>
         <ul className="space-y-5">
           {p.certifications.map((c) => (
-            <li key={c.credentialId} className="flex flex-col gap-3 sm:flex-row sm:items-start">
+            <li key={c.title} className="flex flex-col gap-3 sm:flex-row sm:items-start">
               <Logo src={c.logo} name={c.issuer} size={28} round className="mt-0.5 hidden sm:block" />
               <div className="min-w-0 flex-1">
                 <p className="flex items-center gap-2.5">
