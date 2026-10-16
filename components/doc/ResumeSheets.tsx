@@ -140,7 +140,7 @@ function PublicationEntry({ pub }: { pub: Publication }) {
 /* -------------------------------------------------------------- sheets */
 
 export default function ResumeSheets() {
-  const WORK_TYPES = ["Internship", "Apprenticeship"];
+  const WORK_TYPES = ["Internship", "Apprenticeship", "Contract"];
   const work = p.experience.filter((e) => WORK_TYPES.includes(e.type));
   const orgs = p.experience.filter((e) => !WORK_TYPES.includes(e.type));
 

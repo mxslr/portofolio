@@ -19,8 +19,8 @@
   "about": {
     "greeting": "Hi, I'm Marshall.",
     "paragraphs": [
-      "I train machine learning models and then build the full-stack platforms that put them in front of real people. Currently an Information Systems undergraduate at Telkom University, currently interning as an AI Engineer, and permanently curious.",
-      "In the past 6 months I shipped 6+ end-to-end products, reached the finalist stage in 3 national hackathons, and collected 6 professional certifications from AWS, Google, IBM, Microsoft, and HackerRank. I like my evaluation leakage-free, my APIs documented, and my coffee unsupervised.",
+      "I build AI systems end to end, from training deep learning and computer vision models to RAG pipelines on vector databases, then ship them inside full-stack platforms deployed with Docker and Kubernetes. Information Systems undergraduate at Telkom University, currently interning as an AI Engineer, and permanently curious.",
+      "Three AI engineering internships so far, across enterprise document automation, cloud data workflows, and medical imaging research. AWS Certified AI Practitioner and Microsoft Certified: Azure AI Fundamentals among 6 professional certifications, plus a first-author publication, 6+ shipped end-to-end products, and national finalist placements in 3 hackathons. I like my evaluation leakage-free, my answers cited, and my coffee unsupervised.",
       "This whole site is one big document. Go ahead, switch to Editing mode and mess with it. It resets when you refresh, just like my sleep schedule."
     ],
     "education": {
@@ -32,36 +32,24 @@
     },
     "skills": [
       {
-        "label": "AI and Machine Learning",
+        "label": "AI, Machine Learning and Deep Learning",
         "items": "Python, PyTorch, TensorFlow, TensorFlow.js, Scikit-Learn, OpenCV, MediaPipe, YOLO, CNNs, transfer learning, model evaluation, explainability, Grad-CAM"
       },
       {
-        "label": "LLM and Document Intelligence",
-        "items": "OpenAI API, LangChain, RAG, prompt engineering, OCR, invoice data extraction, human-in-the-loop validation"
+        "label": "LLM, RAG and Vector Databases",
+        "items": "LLMs, RAG, LangChain, OpenAI API, Groq, embeddings, pgvector, ChromaDB, FAISS, Pinecone, prompt engineering, OCR, document intelligence"
       },
       {
-        "label": "Microsoft Power Platform",
-        "items": "Power Apps, Power Automate, AI Builder, TypeScript Office Scripts, approval workflows, Microsoft 365 integration"
+        "label": "Data Science and Analytics",
+        "items": "SQL, Pandas, NumPy, BigQuery, Google Cloud Platform, data preprocessing, exploratory data analysis, data visualization"
       },
       {
-        "label": "Enterprise Process Automation",
-        "items": "SAP S/4HANA invoice data mapping, posting-template alignment, Accounts Payable workflows, duplicate detection, audit logging, Odoo"
+        "label": "Backend, Cloud and DevOps",
+        "items": "FastAPI, NestJS, Laravel, Node.js, Express.js, RESTful APIs, PostgreSQL, MySQL, Prisma, Supabase, Docker, Kubernetes, Git/GitHub, plus React, Next.js, TypeScript, and Three.js on the front"
       },
       {
-        "label": "AWS and Generative AI",
-        "items": "Amazon Bedrock, foundation models, agentic AI concepts"
-      },
-      {
-        "label": "Data and Backend",
-        "items": "SQL, Pandas, NumPy, FastAPI, RESTful APIs, PostgreSQL, Docker, Git/GitHub, BigQuery, Google Cloud Platform"
-      },
-      {
-        "label": "Full-Stack Web",
-        "items": "React, Next.js, TypeScript, Node.js, NestJS, Express.js, PHP, Laravel, Prisma, Supabase"
-      },
-      {
-        "label": "3D and Graphics",
-        "items": "Three.js, react-three-fiber, on-device inference, real-time computer vision"
+        "label": "AWS and Microsoft Ecosystem",
+        "items": "Amazon Bedrock, foundation models, Azure AI, Power Apps, Power Automate, AI Builder, TypeScript Office Scripts, Microsoft 365 integration, SAP S/4HANA data mapping"
       }
     ]
   },
@@ -117,6 +105,20 @@
       "status": ""
     },
     {
+      "company": "Directorate of Student Affairs, Telkom University",
+      "role": "Software Engineer",
+      "type": "Contract",
+      "period": "April 2026 - September 2026",
+      "location": "Telkom University",
+      "logo": "/logos/logo_ditmawa.webp",
+      "url": "https://kka-draft.telkomuniversity.ac.id/",
+      "summary": "Built KKA-DRAFT from scratch under a contract through UKM CCI, a Laravel document generation platform that lets 50+ student organizations produce official Proposal Kegiatan and LPJ documents in minutes instead of 2+ hours. Engineered the PDF system end to end on dompdf, with pixel-accurate official templates, a two-pass render that fills the table of contents with real page numbers, FPDI merging of uploaded attachments, and render caching. Closed all 9 findings from the PuTI Directorate's vulnerability assessment and locked each fix with regression tests, covering a nonce-based strict CSP, owner-only authorization, HTMLPurifier sanitization, private file storage, and layered rate limiting.",
+      "images": [
+        "/projects/kka-draft-1.webp"
+      ],
+      "status": ""
+    },
+    {
       "company": "PT Data Labs Analytics",
       "role": "Artificial Intelligence Engineer",
       "type": "Internship",
@@ -142,25 +144,13 @@
     },
     {
       "company": "Central Computer Improvement, Telkom University",
-      "role": "Full-Stack Developer",
+      "role": "Backend Developer",
       "type": "Organization",
       "period": "February 2026 - Present",
       "location": "Telkom University",
       "logo": "/logos/logo_cci.webp",
       "url": "",
-      "summary": "Backend developer on a 6-person team building a vendor marketplace with UKM CSC, shipping 90+ REST endpoints with NestJS, PostgreSQL, and Prisma alongside Supabase, Midtrans, SMTP, and Google OAuth integrations. Also independently built KKA-DRAFT, the document automation platform used by 50+ student organizations.",
-      "images": [],
-      "status": ""
-    },
-    {
-      "company": "ERP Laboratory, Telkom University",
-      "role": "Laboratory Assistant",
-      "type": "Organization",
-      "period": "March 2026 - Present",
-      "location": "Telkom University",
-      "logo": "/logos/logo_erp.webp",
-      "url": "",
-      "summary": "Lead the Champions Teams program, curating and publishing 10+ national and international competitions every month for 200+ Information Systems students.",
+      "summary": "Led backend development of a campus service marketplace built with UKM CSC on a 6-person team. Designed the architecture and a 20-model PostgreSQL schema from scratch with NestJS and Prisma, built every backend module across 90+ REST endpoints, developed the Midtrans payment system with SHA-512 webhook verification, merchant withdrawals, and monthly revenue-sharing reports, and added real-time user-to-merchant chat with Stream Chat.",
       "images": [],
       "status": ""
     },
@@ -180,7 +170,7 @@
   "projects": [
     {
       "name": "KawanTuli",
-      "tagline": "BISINDO sign language platform with a two-way translator and a 3D avatar teacher",
+      "tagline": "Real-time sign language recognition and 3D avatar platform for BISINDO",
       "period": "July 2026 - Present",
       "role": "Capstone Project",
       "link": "",
@@ -209,7 +199,7 @@
     },
     {
       "name": "AMANIN",
-      "tagline": "AI-powered deepfake detection to stop media-based fraud",
+      "tagline": "Deepfake detection and digital media forensics system to stop AI-powered fraud",
       "period": "April 2026 - May 2026",
       "role": "Social Project",
       "link": "https://www.kompasiana.com/bagasharis0833/6a20ef8ec925c4459b21f5c2/mahasiswa-telkom-university-edukasi-warga-sukapura-hadapi-penipuan-ai-melalui-program-amanin",
@@ -235,19 +225,25 @@
     },
     {
       "name": "GAP",
-      "tagline": "API intelligence platform that maps your entire codebase in seconds",
-      "period": "May 2026 - June 2026",
-      "role": "Personal Project",
+      "tagline": "RAG-powered API intelligence and gap analysis platform",
+      "period": "May 2026 - Present",
+      "role": "Refactory Hackathon 2026",
       "link": "",
       "stack": [
+        "Next.js",
         "TypeScript",
-        "RAG",
-        "Regular Expressions"
+        "Groq (Llama 3.1)",
+        "Gemini embeddings",
+        "pgvector",
+        "PostgreSQL",
+        "Docker",
+        "Kubernetes"
       ],
       "points": [
-        "Auto-detects routes, request bodies, and backend-to-frontend contract mismatches directly from source code, with zero annotations required.",
-        "Parses entire codebases and generates a full API map in seconds, aimed at teams with undocumented or out-of-sync APIs.",
-        "In active development with open feedback loops from peer engineering teams."
+        "Scans a codebase from a GitHub URL or dropped folder, detects backend routes across Express, FastAPI, Laravel, NestJS, and Next.js and frontend calls across fetch, axios, and React Query, then flags connected, orphan, and ghost endpoints.",
+        "“Ask your codebase” RAG: route-handler chunks, overlapping 60-line windows, and per-route summary cards embedded with Gemini into pgvector behind an HNSW cosine index, retrieving the top 6 after similarity thresholding and overlap deduplication.",
+        "Answers are grounded strictly in the retrieved sources with inline citations to file paths, line ranges, and routes, and say so plainly instead of inventing endpoints when nothing relevant comes back.",
+        "Hybrid pipeline runs deterministic parsers first with LLM fallback, ships with Docker on Kubernetes, and is backed by 200+ Vitest tests."
       ],
       "images": [
         "/projects/gap-1.webp",
@@ -264,7 +260,7 @@
     },
     {
       "name": "MLCRAFT",
-      "tagline": "Open-source plugin that turns AI coding assistants into a senior ML research engineer",
+      "tagline": "Multi-domain plugin that turns AI coding agents into a senior ML research engineer",
       "period": "July 2026",
       "role": "Open Source",
       "link": "https://github.com/mxslr/mlcraft",
@@ -283,54 +279,6 @@
         "/projects/mlcraft-1.webp"
       ],
       "videos": []
-    },
-    {
-      "name": "Mammography Research Paper",
-      "tagline": "Benign vs malignant classification on CBIS-DDSM, done honestly",
-      "period": "April 2026 - July 2026",
-      "role": "HUMIC Research",
-      "link": "",
-      "stack": [
-        "PyTorch",
-        "CBIS-DDSM",
-        "Grad-CAM",
-        "JADIMI"
-      ],
-      "points": [
-        "My leakage-free approach produced the best results in a 3-person team and was selected as the final pipeline.",
-        "Benchmarked 6 architectures including a custom CBAM hybrid-fusion model and Mammo-CLIP across 12+ experiments.",
-        "Clinical metadata proved the biggest lever, AUC 0.797 to 0.856 on lesion regions and 0.785 to 0.845 on whole mammograms, verified with Grad-CAM evidence of correct lesion focus."
-      ],
-      "images": [
-        "/projects/research-1.webp",
-        "/projects/research-2.webp",
-        "/projects/research-3.webp",
-        "/projects/research-4.webp"
-      ],
-      "videos": []
-    },
-    {
-      "name": "KKA-DRAFT",
-      "tagline": "Document automation for 50+ student organizations at Telkom University",
-      "period": "April 2026 - June 2026",
-      "role": "Telkom University Student Directorate",
-      "link": "https://kka-draft.telkomuniversity.ac.id/",
-      "stack": [
-        "PHP",
-        "dompdf",
-        "MySQL"
-      ],
-      "points": [
-        "Generates official Proposal Kegiatan and LPJ documents without the chaos of manual formatting.",
-        "Delivered in a self-imposed 3-month sprint with full creative freedom and no predefined specification.",
-        "Solved multi-page PDF rendering with embedded tables, signatures, logos, and pixel-accurate formatting, then passed a penetration test from Telkom's PuTI Directorate."
-      ],
-      "images": [
-        "/projects/kka-draft-1.webp"
-      ],
-      "videos": [
-        "/projects/kka-draft-demo.webm"
-      ]
     }
   ],
   "awards": [
@@ -421,6 +369,10 @@
       {
         "name": "PT Bumi Resources Tbk",
         "logo": "/logos/logo_bumi.jpg"
+      },
+      {
+        "name": "Telkom University",
+        "logo": "/logos/logo_ditmawa.webp"
       },
       {
         "name": "PT Data Labs Analytics",

@@ -21,7 +21,7 @@ Everything on the site lives in one file: **`data/portfolio.json`**. Add, edit, 
 | `about` | Profile paragraphs, education, skills |
 | `socials` | The links in Let's Connect and the Share menu |
 | `linkedinBadge` | Your LinkedIn badge (vanity name) |
-| `experience` | Work and organizational entries. `type: "Internship"` or `"Apprenticeship"` goes to Work Experience, anything else goes to Organizational Experience. An optional `status` (for example `"Soon"`) shows as a small tag next to the role |
+| `experience` | Work and organizational entries. `type: "Internship"`, `"Apprenticeship"`, or `"Contract"` goes to Work Experience, anything else goes to Organizational Experience. An optional `status` (for example `"Soon"`) shows as a small tag next to the role |
 | `projects` | Projects with `images`, `videos`, `stack`, `points`, optional `link`. Photos and videos open in a swipeable viewer via the buttons under each project |
 | `publications` | Published papers. Each one shows title, publisher, issue, authors, an inline PDF reader, and a description. Put the file in `public/publications/` and set `pdf` and `pages` |
 | `awards` | Honors and awards, optional `image` |

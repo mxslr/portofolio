@@ -1178,10 +1178,6 @@ export default function WordShell({ docId, meta, nav, children }: Props) {
             >
               {children}
             </div>
-            <p className="pb-6 text-center text-[12px] text-dim">
-              Built with Next.js, styled after the world&apos;s most famous
-              document editor. No actual documents were harmed.
-            </p>
           </div>
         </main>
 
